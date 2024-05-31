@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_fragment_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    android:fillViewport="true"
+    tools:viewBindingType="androidx.core.widget.NestedScrollView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/tv_viewing"
+            style="@style/H5"
+            android:paddingVertical="@dimen/settings_padding_ver1"
+            android:text="@string/viewing"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/rgTypeFilm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/settings_radio_group_margin_bot"
+            android:background="@drawable/radiogroup_border"
+            android:checkedButton="@+id/rbAll"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_viewing">
+            <RadioButton
+                android:id="@+id/rbAll"
+                style="@style/radiobutton"
+                android:background="@drawable/radiobutton_selector_left"
+                android:text="@string/tv_show_all" />
+            <RadioButton
+                android:id="@+id/rbFilm"
+                style="@style/radiobutton"
+                android:background="@drawable/radiobutton_selector_middle"
+                android:text="@string/films" />
+            <RadioButton
+                android:id="@+id/rbSerial"
+                style="@style/radiobutton"
+                android:background="@drawable/radiobutton_selector_right"
+                android:text="@string/serials_kit" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_country"
+            style="@style/H3_search_settings_text1"
+            android:layout_marginTop="@dimen/settings_tv_country_margin_top"
+            android:text="@string/country"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rgTypeFilm" />
+
+        <TextView
+            android:id="@+id/tv_country_enter"
+            style="@style/H4_search_settings_text1"
+            android:text="@string/country"
+            app:layout_constraintBottom_toBottomOf="@id/tv_country"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_country" />
+
+        <View
+            style="@style/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_country" />
+
+        <TextView
+            android:id="@+id/tv_genre"
+            style="@style/H3_search_settings_text1"
+            android:text="@string/genre"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_country" />
+
+        <TextView
+            android:id="@+id/tv_genre_enter"
+            style="@style/H4_search_settings_text1"
+            android:text="@string/genre"
+            app:layout_constraintBottom_toBottomOf="@id/tv_genre"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_genre" />
+
+        <View
+            style="@style/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_genre" />
+
+        <TextView
+            android:id="@+id/tv_year"
+            style="@style/H3_search_settings_text1"
+            android:text="@string/year"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_genre" />
+
+        <TextView
+            android:id="@+id/tv_year_enter"
+            style="@style/H4_search_settings_text1"
+            android:text="@string/year"
+            app:layout_constraintBottom_toBottomOf="@id/tv_year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_year" />
+
+        <View
+            style="@style/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_year" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            style="@style/H3_search_settings_text1"
+            android:text="@string/rating"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_year" />
+
+        <TextView
+            android:id="@+id/tv_rating_enter"
+            style="@style/H4_search_settings_text1"
+            android:text="@string/rating"
+            app:layout_constraintBottom_toBottomOf="@id/tv_rating"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_rating" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/range_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stepSize="@dimen/settings_range_slider_step"
+            android:valueFrom="@dimen/settings_range_slider_from"
+            android:valueTo="@dimen/settings_range_slider_to"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_rating"
+            app:values="@array/initial_range_slider_values" />
+
+        <TextView
+            android:id="@+id/tv_slider_from"
+            style="@style/H4_search_settings_rating_from"
+            android:text="@string/_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/range_slider" />
+
+        <TextView
+            android:id="@+id/tv_slider_to"
+            style="@style/H4_search_settings_rating_to"
+            android:text="@string/_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/range_slider" />
+
+        <View
+            style="@style/divider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_slider_from" />
+
+        <TextView
+            android:id="@+id/tv_sorting"
+            style="@style/H5"
+            android:paddingVertical="@dimen/settings_padding_ver1"
+            android:text="@string/sorting"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_slider_from" />
+
+        <RadioGroup
+            android:id="@+id/rgSorting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_radio_group2_margin_top"
+            android:background="@drawable/radiogroup_border"
+            android:checkedButton="@+id/rbData"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sorting">
+
+            <RadioButton
+                android:id="@+id/rbData"
+                style="@style/radiobutton"
+                android:background="@drawable/radiobutton_selector_left"
+                android:text="@string/date" />
+
+            <RadioButton
+                android:id="@+id/rbPopular"
+                style="@style/radiobutton"
+                android:background="@drawable/radiobutton_selector_middle"
+                android:text="@string/popularity" />
+
+            <RadioButton
+                android:id="@+id/rbRating"
+                style="@style/radiobutton"
+                android:background="@drawable/radiobutton_selector_right"
+                android:text="@string/rating" />
+        </RadioGroup>
+
+        <View
+            style="@style/divider"
+            android:layout_marginTop="@dimen/settings_divider_margin_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rgSorting" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_switch1_margin_top"
+            android:switchPadding="@dimen/settings_padding_ver1"
+            android:theme="@style/SCBSwitch"
+            android:text="@string/dont_show_viewed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rgSorting"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:id="@+id/tv_button"
+            style="@style/setting_bt_select"
+            android:text="@string/selectedMy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/switch1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

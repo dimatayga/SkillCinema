@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Style_Dialog_Rounded_Corner" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
+    <style name="style_app" parent="Theme.movie_catalog">
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="textApp" parent="style_app">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="H0" parent = "style_app">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginTop">@dimen/poster_name_top</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+    <style name="H1" parent = "style_app">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="H2" parent = "style_app">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+    <style name="H3" parent = "style_app">
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+    <style name="H4" parent = "style_app">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+    <style name="H4_bold" parent = "style_app">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="H5" parent = "style_app">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:gravity">start</item>
+    </style>
+    <style name="H6" parent = "style_app">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:layout_marginTop">@dimen/viewer_season_recycler_data_top</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+
+    <style name="H0_poster" parent = "H0">
+        <item name="android:textColor">@color/background_card</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+
+    <style name="H2_app" parent = "H2">
+        <item name="android:layout_marginTop">@dimen/margin_app_top</item>
+    </style>
+    <style name="H2_film_info" parent = "H2">
+        <item name="android:layout_marginTop">@dimen/film_page_margin_top_h2</item>
+        <item name="android:layout_marginBottom">@dimen/film_page_margin_bottom_h2</item>
+    </style>
+
+    <style name="H3.1" parent = "H3">
+        <item name="android:layout_marginTop">@dimen/margin_app_top</item>
+        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginStart">@dimen/activity_horizontal_margin</item>
+    </style>
+    <style name="H3_description" parent="H3.1">
+        <item name="android:maxLines">20</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+    <style name="H3_person_name" parent="H3.1">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/dp0</item>
+        <item name="android:layout_marginStart">@dimen/person_name_margin_start</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <style name="H3_bottom_sheet_add_collection" parent="H3">
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="H3_collection" parent="H3">
+        <item name="android:layout_marginTop">27dp</item>
+        <item name="android:layout_marginStart">23dp</item>
+    </style>
+    <style name="H3_search_settings_text1" parent="H3">
+        <item name="android:paddingVertical">16dp</item>
+    </style>
+
+    <style name="H4_" parent = "H4">
+        <item name="android:layout_marginTop">@dimen/margin_top_display</item>
+        <item name="android:layout_marginStart">@dimen/card_people_name_marHor</item>
+    </style>
+    <style name="H4_home" parent = "H4">
+        <item name="android:layout_marginStart">@dimen/margin_top_display</item>
+    </style>
+    <style name="H4_person" parent = "H4">
+        <item name="android:layout_marginStart">@dimen/card_people_name_marHor</item>
+    </style>
+    <style name="H4_et" parent = "H4">
+        <item name="android:textColor">@color/blue_arrow</item>
+        <item name="android:gravity">end|top</item>
+    </style>
+    <style name="H4_viewer_serial" parent = "H4">
+        <item name="android:textColor">@color/h5</item>
+    </style>
+    <style name="H4_search_settings_rating_from" parent="H4">
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+    <style name="H4_search_settings_rating_to" parent="H4_search_settings_rating_from">
+        <item name="android:gravity">end|center_vertical</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+    <style name="H4_search_settings_text1" parent="H4">
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="H4_search_settings_text3" parent="H4">
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:gravity">center_vertical|start</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingVertical">@dimen/settings_padding_vert</item>
+    </style>
+    <style name="H4_search_settings_edit_text" parent="H4">
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:backgroundTint">@color/transparent</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="H4_bottom_item_tv_text" parent="H4">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">start</item>
+        <item name="android:paddingVertical">@dimen/bottom_item_tv_text_padding_ver</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="H3_bottom_years" parent="H4">
+        <item name="android:layout_width">@dimen/bottom_years_width</item>
+        <item name="android:textColor">@color/h5</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingVertical">@dimen/bottom_years_padding_ver</item>
+        <item name="android:paddingHorizontal">@dimen/bottom_years_padding_hor</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="H5.1" parent = "H5">
+        <item name="android:layout_marginTop">@dimen/margin_app_top</item>
+        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+    <style name="H5_actor" parent = "H5.1">
+        <item name="android:layout_marginTop">@dimen/margin_top_display</item>
+        <item name="android:layout_marginEnd">@dimen/margin_top_display</item>
+    </style>
+    <style name="H5_home" parent = "H5.1">
+        <item name="android:layout_marginTop">@dimen/margin_top_h5_home</item>
+        <item name="android:layout_marginEnd">@dimen/margin_top_display</item>
+    </style>
+    <style name="H5_poster" parent = "H5.1">
+        <item name="android:layout_marginTop">@dimen/film_page_margin_top_h5</item>
+        <item name="android:layout_marginEnd">@dimen/dp0</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+    <style name="H5_toolbar" parent = "H5.1">
+        <item name="android:layout_marginTop">@dimen/toolbar_margin_top</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
+    <style name="H5_person_job" parent = "H5.1">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">@dimen/person_job_margin_top</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <style name="H5_description" parent = "H5.1">
+        <item name="android:layout_marginTop">@dimen/viewer_season_recycler_data_top</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+    <style name="H5_filmography" parent = "H5">
+        <item name="android:layout_marginTop">@dimen/filmography_recycler_top</item>
+    </style>
+    <style name="H5_show_all" parent = "H5">
+        <item name="android:textColor">?attr/colorSecondary</item>
+    </style>
+
+
+    <style name="app_bold" parent = "textApp">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="app_normal" parent = "textApp">
+        <item name="android:textStyle">normal</item>
+    </style>
+    <style name="icon_rating" parent = "textApp">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">6sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:background">@drawable/card_film_rating_background</item>
+        <item name="android:paddingHorizontal">5dp</item>
+        <item name="android:paddingVertical">2dp</item>
+        <item name="android:hint">@string/icon_rating_hint</item>
+    </style>
+    <style name="cardViewMy" parent="textApp">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/film_page_margin_bottom_h2</item>
+    </style>
+    <style name="tabs_name" parent = "H2">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:maxLength">15</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:paddingStart">@dimen/tab_margin_hor</item>
+        <item name="android:paddingVertical">8dp</item>
+    </style>
+    <style name="tabs_quantity" parent = "H4">
+        <item name="android:textColor">@color/background_card</item>
+        <item name="android:paddingStart">@dimen/tab_item_margin_hor</item>
+        <item name="android:paddingEnd">@dimen/tab_margin_hor</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet</item>
+    </style>
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/background_card</item>
+    </style>
+    <style name="film_page_icon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="blue_button" parent="style_app">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dialog_tv_height</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@drawable/tab_selected_background</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal">@dimen/dialog_tv_padding_hor</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:focusable">true</item>
+    </style>
+    <style name="dialog_tv" parent="blue_button">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_marginTop">@dimen/dialog_tv_margin_top</item>
+        <item name="android:layout_marginEnd">@dimen/dialog_tv_margin_end</item>
+        <item name="android:layout_marginBottom">@dimen/dialog_tv_margin_bottom</item>
+        <item name="android:text">@string/ok</item>
+    </style>
+    <style name="setting_bt_select" parent="blue_button">
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_marginBottom">@dimen/dialog_tv_margin_bottom</item>
+        <item name="android:layout_marginEnd">@dimen/dialog_tv_margin_end</item>
+        <item name="android:text">@string/ok</item>
+    </style>
+    <style name="tvProfileCount" parent="style_app">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/profile_count_margin_top</item>
+        <item name="android:background">@drawable/tab_selected_background</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingHorizontal">@dimen/profile_count_padding_hor</item>
+        <item name="android:paddingVertical">@dimen/profile_count_padding_ver</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">8sp</item>
+    </style>
+    <style name = "dialog_et" parent = "style_app">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/dialog_et_marginHor</item>
+        <item name="android:layout_marginTop">@dimen/dialog_et_marginTop</item>
+        <item name="android:hint">@string/dialog_message</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+    </style>
+    <style name="search_loupe">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">18dp</item>
+        <item name="android:contentDescription">@string/todo</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="search_edit_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">start</item>
+        <item name="android:layout_gravity">start</item>
+    </style>
+    <style name="H1_search_separator" parent = "H1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">@dimen/search_icon_separator_margin_str</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="H5_search_tv_test" parent = "H5">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">start</item>
+        <item name="android:layout_marginVertical">@dimen/search_tv_test_margin_ver</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="H5_card_collection" parent = "H5">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/profile_card_tv_margin_top</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="settings_year_text" parent = "H3">
+        <item name="android:width">0dp</item>
+        <item name="android:paddingTop">@dimen/settings_padding_vert</item>
+        <item name="android:paddingStart">@dimen/settings_padding_hor</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/blue_arrow</item>
+        <item name="android:layout_gravity">start</item>
+    </style>
+    <style name="settings_iv_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/settings_padding_vert</item>
+    </style>
+    <style name="radiobutton">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@drawable/radiobutton_color_selector</item>
+    </style>
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/blue_arrow</item>
+        <item name="colorSwitchThumbNormal">@color/white</item>
+        <item name="android:colorForeground">?attr/colorSecondary</item>
+    </style>
+</resources>
