@@ -126,8 +126,7 @@ class DataRepository @Inject constructor( private var dataSourceDB: DataSourceDB
             // Select the list of premieres
             linkers = DataCentre.linkers.filter { it.kit == Kit.PREMIERES }
         }
-//        Log.d("KDS", "${linkers[0].kit}")
-//        linkers = Plug.listLinkers
+
         return linkers
     }
     //Select the list of top films
