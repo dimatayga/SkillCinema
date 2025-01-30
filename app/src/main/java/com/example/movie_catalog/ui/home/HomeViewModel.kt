@@ -1,11 +1,13 @@
 package com.example.movie_catalog.ui.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie_catalog.data.DataRepository
 import com.example.movie_catalog.data.api.home.getKit.SelectedKit
 import com.example.movie_catalog.entity.ErrorApp
 import com.example.movie_catalog.entity.Film
+import com.example.movie_catalog.entity.Linker
 import com.example.movie_catalog.entity.enumApp.Kit
 import com.example.movie_catalog.entity.plug.Plug
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,10 +25,12 @@ class HomeViewModel @Inject constructor(private var dataRepository: DataReposito
     private var _namekit = MutableStateFlow(SelectedKit())
     var namekit = _namekit.asStateFlow()
     //Premiere movie Data Channel
-    private var _premieres = MutableStateFlow(Plug.plugLinkers)
+//    private var _premieres = MutableStateFlow(Plug.plugLinkers)
+    private var _premieres = MutableStateFlow<List<Linker>>(emptyList())
     var premieres = _premieres.asStateFlow()
     //Popular movie Data Channel
-    private var _popularFilms = MutableStateFlow(Plug.plugLinkers)
+    //private var _popularFilms = MutableStateFlow(Plug.plugLinkers)
+    private var _popularFilms = MutableStateFlow<List<Linker>>(emptyList())
     var popularFilms = _popularFilms.asStateFlow()
     //TOP movie Data Channel
     private var _pageTop250 = MutableStateFlow(Plug.plugLinkers)
@@ -83,11 +87,16 @@ class HomeViewModel @Inject constructor(private var dataRepository: DataReposito
     //Request a list of films from the premieres
     private fun getPremieres() {
         viewModelScope.launch(Dispatchers.IO) {
+            Log.d("HomeViewModel", "getPremieres() called")
             kotlin.runCatching {
                 dataRepository.getPremieres()
             }.fold(
-                onSuccess = {_premieres.value = it },
-                onFailure = { errorApp.errorApi(it.message!!)}
+                onSuccess = {
+                    Log.d("HomeViewModel", "getPremieres() onSuccess: ${it.size} items")
+                    _premieres.value = it },
+                onFailure = {
+                    Log.e("HomeViewModel", "getPremieres() onFailure: ${it.message}")
+                    errorApp.errorApi(it.message!!)}
             )
         }
     }
@@ -98,7 +107,8 @@ class HomeViewModel @Inject constructor(private var dataRepository: DataReposito
                 dataRepository.getTop(1, Kit.POPULAR)
             }.fold(
                 onSuccess = {_popularFilms.value = it },
-                onFailure = { errorApp.errorApi(it.message!!)}
+                //onFailure = { errorApp.errorApi(it.message!!)}
+                onFailure = {errorApp.errorApi(it.message?:"Неизвестная ошибка")}
             )
         }
     }
@@ -109,7 +119,7 @@ class HomeViewModel @Inject constructor(private var dataRepository: DataReposito
                 dataRepository.getTop(1, Kit.TOP250)
             }.fold(
                 onSuccess = {_pageTop250.value = it },
-                onFailure = { errorApp.errorApi(it.message!!)}
+                onFailure = { errorApp.errorApi(it.message?:"Ошибка ТОП250")}
             )
         }
     }
@@ -134,7 +144,7 @@ class HomeViewModel @Inject constructor(private var dataRepository: DataReposito
         }
     }
     //Request a list of films from the random 2
-    private suspend fun getRandom2() {
+    private fun getRandom2() {
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching { dataRepository.getFilters(1, Kit.RANDOM2) }.fold(
                 onSuccess = {_randomKit2.value = it },

@@ -53,8 +53,8 @@ object DataCentre {
             "e923d7ea-a131-4064-b8c1-b33976f498ca" -> headers["X-API-KEY"] =
                 "20c3f30c-7ba7-4417-9c72-4975ac6091c6"
 
-            else -> headers["X-API-KEY"] = "492eebc6-b071-49bd-957c-d38906544e59"
-            //"e923d7ea-a131-4064-b8c1-b33976f498ca"
+            else -> headers["X-API-KEY"] = //"492eebc6-b071-49bd-957c-d38906544e59"
+            "e923d7ea-a131-4064-b8c1-b33976f498ca"
         }
         Log.d("KDS", "${headers["X-API-KEY"]}")
     }
@@ -154,11 +154,26 @@ object DataCentre {
         }
     }
 
+    //    fun addImage(film: Film, tab: ImageGroup, filmImageDTO: FilmImageDTO) {
+//        filmImageDTO.items.forEach {
+//            film.images.add(
+//                ImageFilm(imageUrl = it.imageUrl, previewUrl = it.previewUrl, imageGroup = tab)
+//            )
+//        }
+//    }
     fun addImage(film: Film, tab: ImageGroup, filmImageDTO: FilmImageDTO) {
+        val newImages = film.images.toMutableList()
         filmImageDTO.items.forEach {
-            film.images.add(
+            newImages.add(
                 ImageFilm(imageUrl = it.imageUrl, previewUrl = it.previewUrl, imageGroup = tab)
             )
+        }
+        // Создаем новый объект Film с обновленным списком images
+        val updatedFilm = film.copy(images = newImages.toList())
+        // Заменяем старый объект Film на новый в списке films
+        val index = films.indexOfFirst { it.filmId == film.filmId }
+        if (index != -1) {
+            films[index] = updatedFilm
         }
     }
 
@@ -314,5 +329,6 @@ object DataCentre {
     fun putJobPerson(id: String) {
         currentJobPerson = id
     }
+
 }
 

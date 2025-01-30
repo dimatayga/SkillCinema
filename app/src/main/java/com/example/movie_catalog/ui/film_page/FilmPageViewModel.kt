@@ -147,7 +147,7 @@ class FilmPageViewModel @Inject constructor(private var dataRepository: DataRepo
                 dataRepository.getImages(film)
             }.fold(
                 onSuccess = { _images.value = it },
-                onFailure = { errorApp.errorApi(it.message!!) }
+                onFailure = { errorApp.errorApi(it.message ?: "Error nothing") }
             )
         }
     }
@@ -158,7 +158,7 @@ class FilmPageViewModel @Inject constructor(private var dataRepository: DataRepo
                 dataRepository.getListLinkerForSimilar(film)
             }.fold(
                 onSuccess = { _similar.value = it },
-                onFailure = { errorApp.errorApi(it.message!!) }
+                onFailure = { errorApp.errorApi(it.message?: "Error nothing") }
             )
         }
     }

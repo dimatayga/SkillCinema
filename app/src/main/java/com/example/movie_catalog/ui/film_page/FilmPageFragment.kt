@@ -118,7 +118,7 @@ class FilmPageFragment : Fragment() {
         stringForTextView = if (filmInfo.year != null) filmInfo.year.toString().trim() else ""
         //Add genres
         if (stringForTextView != "") stringForTextView += ", "
-        stringForTextView += filmInfo.genresTxt().trim()
+        stringForTextView += filmInfo.genresTxt()
 
         //Add seasons film_info_poster_seasons
         if (filmInfo.totalSeasons != null) {

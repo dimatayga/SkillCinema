@@ -9,7 +9,8 @@ import com.example.movie_catalog.entity.Film
 @Entity(tableName = "films")
 @TypeConverters(ConverterForFilmDB::class)
 data class FilmDB(
-    @PrimaryKey(autoGenerate = true) var idFilm: Int,
+    @PrimaryKey(autoGenerate = true)
+    var idFilm: Int,
     val msg: String,
-    @Embedded var film: Film?
+    @Embedded var film: Film? = null
 )

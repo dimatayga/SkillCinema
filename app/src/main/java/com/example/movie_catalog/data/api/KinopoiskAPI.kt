@@ -10,6 +10,8 @@ import com.example.movie_catalog.data.api.home.premieres.PremieresDTO
 import com.example.movie_catalog.data.api.home.seasons.SeasonsDTO
 import com.example.movie_catalog.data.api.home.top.TopFilmsDTO
 import com.example.movie_catalog.data.api.person.PersonInfoDTO
+import retrofit2.Response
+
 import retrofit2.http.*
 
 interface KinopoiskAPI {
@@ -17,7 +19,7 @@ interface KinopoiskAPI {
     @Headers("Accept: application/json", "Content-type: application/json")
     @GET("/api/v2.2/films/premieres")
     suspend fun getPremieres(@Query("year") year:Int, @Query("month") month: String,
-                             @HeaderMap headers: Map<String, String>): PremieresDTO
+                             @HeaderMap headers: Map<String, String>): Response<PremieresDTO>
 
     //Request TOP films
     @Headers("Accept: application/json", "Content-type: application/json")

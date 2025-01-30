@@ -39,6 +39,15 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         navView.setupWithNavController(navController)
 
+        val homeDestinationId = R.id.nav_home
+        navView.setOnItemReselectedListener { item ->
+            if (item.itemId == homeDestinationId) {
+                // Очищаем стек навигации до фрагмента "Home"
+                navController.popBackStack(homeDestinationId, inclusive = false)
+            }
+        }
+
+
         val inflater = navController.navInflater
         val graph = inflater.inflate(R.navigation.fragment_navigation)
         graph.setStartDestination(R.id.nav_home)

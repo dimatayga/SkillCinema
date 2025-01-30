@@ -152,11 +152,26 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
             }
             is ImageStartHV -> {
                 //Image output in start fragment
-                val listImageStart = items as List<ImageStart>
-                holder.binding.ivIcon.setImageResource(listImageStart[position].imageResource!!)
-                holder.binding.ivIndicator.setImageResource(listImageStart[position].imageIndicator!!)
-                holder.binding.tvSignature.text =
-                    contextClass.resources.getString(listImageStart[position].signature!!)
+//                val listImageStart = items as List<*>
+//                holder.binding.ivIcon.setImageResource(listImageStart[position].imageResource!!)
+//                holder.binding.ivIndicator.setImageResource(listImageStart[position].imageIndicator!!)
+//                holder.binding.tvSignature.text =
+//                    contextClass.resources.getString(listImageStart[position].signature!!)
+
+                //Image output in start fragment
+                if (items is List<*>) {
+                    val listImageStart = items as List<*>
+                    if (listImageStart.isNotEmpty() && listImageStart.all { it is ImageStart}) {
+                        val listImageStartCorrect = listImageStart as List<ImageStart>
+                        holder.binding.ivIcon.setImageResource(listImageStartCorrect[position].imageResource!!)
+                        holder.binding.ivIndicator.setImageResource(listImageStartCorrect[position].imageIndicator!!)
+                        holder.binding.tvSignature.text =
+                            contextClass.resources.getString(listImageStartCorrect[position].signature!!)
+                    } else {
+                        println("Error: items is not a List<ImageStart> in ImageStartHV")
+                    }
+                }
+
             }
             is SeasonVH -> {
                 //Output of information on the series in the series
@@ -175,7 +190,7 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
                             it.episodes.size.toString() + " " + contextClass.getString(R.string.quantity_series)
                 }
             }
-            else -> {}
+            else -> {println("Error: items is not a List in ImageStartHV")}
         }
     }
 

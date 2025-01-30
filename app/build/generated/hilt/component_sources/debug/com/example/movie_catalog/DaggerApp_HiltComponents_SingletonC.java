@@ -13,56 +13,56 @@ import com.example.movie_catalog.data.api.KinopoiskAPI;
 import com.example.movie_catalog.data.room.AppDatabase;
 import com.example.movie_catalog.data.room.DataDao;
 import com.example.movie_catalog.data.room.DataSourceDB;
-import com.example.movie_catalog.di.ApiModule;
 import com.example.movie_catalog.di.ApiModule_ProvideApiFactory;
 import com.example.movie_catalog.di.ApiModule_ProvideRetrofitFactory;
-import com.example.movie_catalog.di.DatabaseModule;
 import com.example.movie_catalog.di.DatabaseModule_ProvideDataDaoFactory;
 import com.example.movie_catalog.di.DatabaseModule_ProvideDatabaseFactory;
 import com.example.movie_catalog.entity.ErrorApp;
 import com.example.movie_catalog.ui.MainActivityViewModel;
-import com.example.movie_catalog.ui.MainActivityViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.MainActivityViewModel_HiltModules;
 import com.example.movie_catalog.ui.film_page.FilmPageFragment;
 import com.example.movie_catalog.ui.film_page.FilmPageViewModel;
-import com.example.movie_catalog.ui.film_page.FilmPageViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.film_page.FilmPageViewModel_HiltModules;
 import com.example.movie_catalog.ui.filmography.FilmographyFragment;
 import com.example.movie_catalog.ui.filmography.FilmographyViewModel;
-import com.example.movie_catalog.ui.filmography.FilmographyViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.filmography.FilmographyViewModel_HiltModules;
 import com.example.movie_catalog.ui.gallery.GalleryFragment;
 import com.example.movie_catalog.ui.gallery.GalleryViewModel;
-import com.example.movie_catalog.ui.gallery.GalleryViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.gallery.GalleryViewModel_HiltModules;
 import com.example.movie_catalog.ui.home.HomeFragment;
 import com.example.movie_catalog.ui.home.HomeViewModel;
-import com.example.movie_catalog.ui.home.HomeViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.home.HomeViewModel_HiltModules;
 import com.example.movie_catalog.ui.images.ImagesFragment;
 import com.example.movie_catalog.ui.images.ImagesViewModel;
-import com.example.movie_catalog.ui.images.ImagesViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.images.ImagesViewModel_HiltModules;
 import com.example.movie_catalog.ui.list_films.ListFilmFragment;
 import com.example.movie_catalog.ui.list_films.ListFilmViewModel;
-import com.example.movie_catalog.ui.list_films.ListFilmViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.list_films.ListFilmViewModel_HiltModules;
 import com.example.movie_catalog.ui.list_person.ListPersonFragment;
 import com.example.movie_catalog.ui.list_person.ListPersonViewModel;
-import com.example.movie_catalog.ui.list_person.ListPersonViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.list_person.ListPersonViewModel_HiltModules;
 import com.example.movie_catalog.ui.person.PersonFragment;
 import com.example.movie_catalog.ui.person.PersonViewModel;
-import com.example.movie_catalog.ui.person.PersonViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.person.PersonViewModel_HiltModules;
 import com.example.movie_catalog.ui.profile.ProfileFragment;
 import com.example.movie_catalog.ui.profile.ProfileViewModel;
-import com.example.movie_catalog.ui.profile.ProfileViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.profile.ProfileViewModel_HiltModules;
 import com.example.movie_catalog.ui.search.SearchFragment;
 import com.example.movie_catalog.ui.search.SearchViewModel;
-import com.example.movie_catalog.ui.search.SearchViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.search.SearchViewModel_HiltModules;
 import com.example.movie_catalog.ui.season.SeasonsFragment;
 import com.example.movie_catalog.ui.season.SeasonsViewModel;
-import com.example.movie_catalog.ui.season.SeasonsViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.season.SeasonsViewModel_HiltModules;
 import com.example.movie_catalog.ui.settings.SettingFragment;
 import com.example.movie_catalog.ui.settings.SettingsViewModel;
-import com.example.movie_catalog.ui.settings.SettingsViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.settings.SettingsViewModel_HiltModules;
 import com.example.movie_catalog.ui.start.StartFragment;
 import com.example.movie_catalog.ui.start.StartViewModel;
-import com.example.movie_catalog.ui.start.StartViewModel_HiltModules_KeyModule_ProvideFactory;
+import com.example.movie_catalog.ui.start.StartViewModel_HiltModules;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import dagger.hilt.android.ActivityRetainedLifecycle;
-import dagger.hilt.android.flags.HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule;
+import dagger.hilt.android.ViewModelLifecycle;
 import dagger.hilt.android.internal.builders.ActivityComponentBuilder;
 import dagger.hilt.android.internal.builders.ActivityRetainedComponentBuilder;
 import dagger.hilt.android.internal.builders.FragmentComponentBuilder;
@@ -72,25 +72,28 @@ import dagger.hilt.android.internal.builders.ViewModelComponentBuilder;
 import dagger.hilt.android.internal.builders.ViewWithFragmentComponentBuilder;
 import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories;
 import dagger.hilt.android.internal.lifecycle.DefaultViewModelFactories_InternalFactoryFactory_Factory;
-import dagger.hilt.android.internal.managers.ActivityRetainedComponentManager_Lifecycle_Factory;
+import dagger.hilt.android.internal.managers.ActivityRetainedComponentManager_LifecycleModule_ProvideActivityRetainedLifecycleFactory;
+import dagger.hilt.android.internal.managers.SavedStateHandleHolder;
 import dagger.hilt.android.internal.modules.ApplicationContextModule;
-import dagger.hilt.android.internal.modules.ApplicationContextModule_ProvideApplicationFactory;
 import dagger.hilt.android.internal.modules.ApplicationContextModule_ProvideContextFactory;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.DoubleCheck;
-import dagger.internal.MapBuilder;
+import dagger.internal.IdentifierNameString;
+import dagger.internal.KeepFieldType;
+import dagger.internal.LazyClassKeyMap;
 import dagger.internal.Preconditions;
-import dagger.internal.SetBuilder;
-import java.util.Collections;
+import dagger.internal.Provider;
 import java.util.Map;
 import java.util.Set;
-import javax.inject.Provider;
 import retrofit2.Retrofit;
 
 @DaggerGenerated
 @SuppressWarnings({
     "unchecked",
-    "rawtypes"
+    "rawtypes",
+    "KotlinInternal",
+    "KotlinInternalInJava",
+    "cast"
 })
 public final class DaggerApp_HiltComponents_SingletonC {
   private DaggerApp_HiltComponents_SingletonC() {
@@ -106,36 +109,8 @@ public final class DaggerApp_HiltComponents_SingletonC {
     private Builder() {
     }
 
-    /**
-     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
-     */
-    @Deprecated
-    public Builder apiModule(ApiModule apiModule) {
-      Preconditions.checkNotNull(apiModule);
-      return this;
-    }
-
     public Builder applicationContextModule(ApplicationContextModule applicationContextModule) {
       this.applicationContextModule = Preconditions.checkNotNull(applicationContextModule);
-      return this;
-    }
-
-    /**
-     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
-     */
-    @Deprecated
-    public Builder databaseModule(DatabaseModule databaseModule) {
-      Preconditions.checkNotNull(databaseModule);
-      return this;
-    }
-
-    /**
-     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
-     */
-    @Deprecated
-    public Builder hiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule(
-        HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule hiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule) {
-      Preconditions.checkNotNull(hiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule);
       return this;
     }
 
@@ -148,13 +123,23 @@ public final class DaggerApp_HiltComponents_SingletonC {
   private static final class ActivityRetainedCBuilder implements App_HiltComponents.ActivityRetainedC.Builder {
     private final SingletonCImpl singletonCImpl;
 
+    private SavedStateHandleHolder savedStateHandleHolder;
+
     private ActivityRetainedCBuilder(SingletonCImpl singletonCImpl) {
       this.singletonCImpl = singletonCImpl;
     }
 
     @Override
+    public ActivityRetainedCBuilder savedStateHandleHolder(
+        SavedStateHandleHolder savedStateHandleHolder) {
+      this.savedStateHandleHolder = Preconditions.checkNotNull(savedStateHandleHolder);
+      return this;
+    }
+
+    @Override
     public App_HiltComponents.ActivityRetainedC build() {
-      return new ActivityRetainedCImpl(singletonCImpl);
+      Preconditions.checkBuilderRequirement(savedStateHandleHolder, SavedStateHandleHolder.class);
+      return new ActivityRetainedCImpl(singletonCImpl, savedStateHandleHolder);
     }
   }
 
@@ -282,6 +267,8 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     private SavedStateHandle savedStateHandle;
 
+    private ViewModelLifecycle viewModelLifecycle;
+
     private ViewModelCBuilder(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl) {
       this.singletonCImpl = singletonCImpl;
@@ -295,9 +282,16 @@ public final class DaggerApp_HiltComponents_SingletonC {
     }
 
     @Override
+    public ViewModelCBuilder viewModelLifecycle(ViewModelLifecycle viewModelLifecycle) {
+      this.viewModelLifecycle = Preconditions.checkNotNull(viewModelLifecycle);
+      return this;
+    }
+
+    @Override
     public App_HiltComponents.ViewModelC build() {
       Preconditions.checkBuilderRequirement(savedStateHandle, SavedStateHandle.class);
-      return new ViewModelCImpl(singletonCImpl, activityRetainedCImpl, savedStateHandle);
+      Preconditions.checkBuilderRequirement(viewModelLifecycle, ViewModelLifecycle.class);
+      return new ViewModelCImpl(singletonCImpl, activityRetainedCImpl, savedStateHandle, viewModelLifecycle);
     }
   }
 
@@ -468,12 +462,12 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     @Override
     public DefaultViewModelFactories.InternalFactoryFactory getHiltInternalFactoryFactory() {
-      return DefaultViewModelFactories_InternalFactoryFactory_Factory.newInstance(ApplicationContextModule_ProvideApplicationFactory.provideApplication(singletonCImpl.applicationContextModule), getViewModelKeys(), new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl));
+      return DefaultViewModelFactories_InternalFactoryFactory_Factory.newInstance(getViewModelKeys(), new ViewModelCBuilder(singletonCImpl, activityRetainedCImpl));
     }
 
     @Override
-    public Set<String> getViewModelKeys() {
-      return SetBuilder.<String>newSetBuilder(14).add(FilmPageViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(FilmographyViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(GalleryViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(HomeViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ImagesViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ListFilmViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ListPersonViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(MainActivityViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PersonViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(ProfileViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SearchViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SeasonsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SettingsViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(StartViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
+    public Map<Class<?>, Boolean> getViewModelKeys() {
+      return LazyClassKeyMap.<Boolean>of(ImmutableMap.<String, Boolean>builderWithExpectedSize(14).put(LazyClassKeyProvider.com_example_movie_catalog_ui_film_page_FilmPageViewModel, FilmPageViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_filmography_FilmographyViewModel, FilmographyViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_gallery_GalleryViewModel, GalleryViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_home_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_images_ImagesViewModel, ImagesViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_list_films_ListFilmViewModel, ListFilmViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_list_person_ListPersonViewModel, ListPersonViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_MainActivityViewModel, MainActivityViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_person_PersonViewModel, PersonViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_profile_ProfileViewModel, ProfileViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_search_SearchViewModel, SearchViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_season_SeasonsViewModel, SeasonsViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_settings_SettingsViewModel, SettingsViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_movie_catalog_ui_start_StartViewModel, StartViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -489,6 +483,79 @@ public final class DaggerApp_HiltComponents_SingletonC {
     @Override
     public ViewComponentBuilder viewComponentBuilder() {
       return new ViewCBuilder(singletonCImpl, activityRetainedCImpl, activityCImpl);
+    }
+
+    @IdentifierNameString
+    private static final class LazyClassKeyProvider {
+      static String com_example_movie_catalog_ui_home_HomeViewModel = "com.example.movie_catalog.ui.home.HomeViewModel";
+
+      static String com_example_movie_catalog_ui_person_PersonViewModel = "com.example.movie_catalog.ui.person.PersonViewModel";
+
+      static String com_example_movie_catalog_ui_images_ImagesViewModel = "com.example.movie_catalog.ui.images.ImagesViewModel";
+
+      static String com_example_movie_catalog_ui_season_SeasonsViewModel = "com.example.movie_catalog.ui.season.SeasonsViewModel";
+
+      static String com_example_movie_catalog_ui_MainActivityViewModel = "com.example.movie_catalog.ui.MainActivityViewModel";
+
+      static String com_example_movie_catalog_ui_filmography_FilmographyViewModel = "com.example.movie_catalog.ui.filmography.FilmographyViewModel";
+
+      static String com_example_movie_catalog_ui_start_StartViewModel = "com.example.movie_catalog.ui.start.StartViewModel";
+
+      static String com_example_movie_catalog_ui_search_SearchViewModel = "com.example.movie_catalog.ui.search.SearchViewModel";
+
+      static String com_example_movie_catalog_ui_settings_SettingsViewModel = "com.example.movie_catalog.ui.settings.SettingsViewModel";
+
+      static String com_example_movie_catalog_ui_list_films_ListFilmViewModel = "com.example.movie_catalog.ui.list_films.ListFilmViewModel";
+
+      static String com_example_movie_catalog_ui_gallery_GalleryViewModel = "com.example.movie_catalog.ui.gallery.GalleryViewModel";
+
+      static String com_example_movie_catalog_ui_profile_ProfileViewModel = "com.example.movie_catalog.ui.profile.ProfileViewModel";
+
+      static String com_example_movie_catalog_ui_film_page_FilmPageViewModel = "com.example.movie_catalog.ui.film_page.FilmPageViewModel";
+
+      static String com_example_movie_catalog_ui_list_person_ListPersonViewModel = "com.example.movie_catalog.ui.list_person.ListPersonViewModel";
+
+      @KeepFieldType
+      HomeViewModel com_example_movie_catalog_ui_home_HomeViewModel2;
+
+      @KeepFieldType
+      PersonViewModel com_example_movie_catalog_ui_person_PersonViewModel2;
+
+      @KeepFieldType
+      ImagesViewModel com_example_movie_catalog_ui_images_ImagesViewModel2;
+
+      @KeepFieldType
+      SeasonsViewModel com_example_movie_catalog_ui_season_SeasonsViewModel2;
+
+      @KeepFieldType
+      MainActivityViewModel com_example_movie_catalog_ui_MainActivityViewModel2;
+
+      @KeepFieldType
+      FilmographyViewModel com_example_movie_catalog_ui_filmography_FilmographyViewModel2;
+
+      @KeepFieldType
+      StartViewModel com_example_movie_catalog_ui_start_StartViewModel2;
+
+      @KeepFieldType
+      SearchViewModel com_example_movie_catalog_ui_search_SearchViewModel2;
+
+      @KeepFieldType
+      SettingsViewModel com_example_movie_catalog_ui_settings_SettingsViewModel2;
+
+      @KeepFieldType
+      ListFilmViewModel com_example_movie_catalog_ui_list_films_ListFilmViewModel2;
+
+      @KeepFieldType
+      GalleryViewModel com_example_movie_catalog_ui_gallery_GalleryViewModel2;
+
+      @KeepFieldType
+      ProfileViewModel com_example_movie_catalog_ui_profile_ProfileViewModel2;
+
+      @KeepFieldType
+      FilmPageViewModel com_example_movie_catalog_ui_film_page_FilmPageViewModel2;
+
+      @KeepFieldType
+      ListPersonViewModel com_example_movie_catalog_ui_list_person_ListPersonViewModel2;
     }
   }
 
@@ -528,11 +595,12 @@ public final class DaggerApp_HiltComponents_SingletonC {
     private Provider<StartViewModel> startViewModelProvider;
 
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
-        ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam) {
+        ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam,
+        ViewModelLifecycle viewModelLifecycleParam) {
       this.singletonCImpl = singletonCImpl;
       this.activityRetainedCImpl = activityRetainedCImpl;
 
-      initialize(savedStateHandleParam);
+      initialize(savedStateHandleParam, viewModelLifecycleParam);
 
     }
 
@@ -549,7 +617,8 @@ public final class DaggerApp_HiltComponents_SingletonC {
     }
 
     @SuppressWarnings("unchecked")
-    private void initialize(final SavedStateHandle savedStateHandleParam) {
+    private void initialize(final SavedStateHandle savedStateHandleParam,
+        final ViewModelLifecycle viewModelLifecycleParam) {
       this.filmPageViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
       this.filmographyViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
       this.galleryViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
@@ -567,8 +636,86 @@ public final class DaggerApp_HiltComponents_SingletonC {
     }
 
     @Override
-    public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(14).put("com.example.movie_catalog.ui.film_page.FilmPageViewModel", ((Provider) filmPageViewModelProvider)).put("com.example.movie_catalog.ui.filmography.FilmographyViewModel", ((Provider) filmographyViewModelProvider)).put("com.example.movie_catalog.ui.gallery.GalleryViewModel", ((Provider) galleryViewModelProvider)).put("com.example.movie_catalog.ui.home.HomeViewModel", ((Provider) homeViewModelProvider)).put("com.example.movie_catalog.ui.images.ImagesViewModel", ((Provider) imagesViewModelProvider)).put("com.example.movie_catalog.ui.list_films.ListFilmViewModel", ((Provider) listFilmViewModelProvider)).put("com.example.movie_catalog.ui.list_person.ListPersonViewModel", ((Provider) listPersonViewModelProvider)).put("com.example.movie_catalog.ui.MainActivityViewModel", ((Provider) mainActivityViewModelProvider)).put("com.example.movie_catalog.ui.person.PersonViewModel", ((Provider) personViewModelProvider)).put("com.example.movie_catalog.ui.profile.ProfileViewModel", ((Provider) profileViewModelProvider)).put("com.example.movie_catalog.ui.search.SearchViewModel", ((Provider) searchViewModelProvider)).put("com.example.movie_catalog.ui.season.SeasonsViewModel", ((Provider) seasonsViewModelProvider)).put("com.example.movie_catalog.ui.settings.SettingsViewModel", ((Provider) settingsViewModelProvider)).put("com.example.movie_catalog.ui.start.StartViewModel", ((Provider) startViewModelProvider)).build();
+    public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(ImmutableMap.<String, javax.inject.Provider<ViewModel>>builderWithExpectedSize(14).put(LazyClassKeyProvider.com_example_movie_catalog_ui_film_page_FilmPageViewModel, ((Provider) filmPageViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_filmography_FilmographyViewModel, ((Provider) filmographyViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_gallery_GalleryViewModel, ((Provider) galleryViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_home_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_images_ImagesViewModel, ((Provider) imagesViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_list_films_ListFilmViewModel, ((Provider) listFilmViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_list_person_ListPersonViewModel, ((Provider) listPersonViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_MainActivityViewModel, ((Provider) mainActivityViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_person_PersonViewModel, ((Provider) personViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_profile_ProfileViewModel, ((Provider) profileViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_search_SearchViewModel, ((Provider) searchViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_season_SeasonsViewModel, ((Provider) seasonsViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_settings_SettingsViewModel, ((Provider) settingsViewModelProvider)).put(LazyClassKeyProvider.com_example_movie_catalog_ui_start_StartViewModel, ((Provider) startViewModelProvider)).build());
+    }
+
+    @Override
+    public Map<Class<?>, Object> getHiltViewModelAssistedMap() {
+      return ImmutableMap.<Class<?>, Object>of();
+    }
+
+    @IdentifierNameString
+    private static final class LazyClassKeyProvider {
+      static String com_example_movie_catalog_ui_list_person_ListPersonViewModel = "com.example.movie_catalog.ui.list_person.ListPersonViewModel";
+
+      static String com_example_movie_catalog_ui_gallery_GalleryViewModel = "com.example.movie_catalog.ui.gallery.GalleryViewModel";
+
+      static String com_example_movie_catalog_ui_filmography_FilmographyViewModel = "com.example.movie_catalog.ui.filmography.FilmographyViewModel";
+
+      static String com_example_movie_catalog_ui_profile_ProfileViewModel = "com.example.movie_catalog.ui.profile.ProfileViewModel";
+
+      static String com_example_movie_catalog_ui_list_films_ListFilmViewModel = "com.example.movie_catalog.ui.list_films.ListFilmViewModel";
+
+      static String com_example_movie_catalog_ui_person_PersonViewModel = "com.example.movie_catalog.ui.person.PersonViewModel";
+
+      static String com_example_movie_catalog_ui_images_ImagesViewModel = "com.example.movie_catalog.ui.images.ImagesViewModel";
+
+      static String com_example_movie_catalog_ui_MainActivityViewModel = "com.example.movie_catalog.ui.MainActivityViewModel";
+
+      static String com_example_movie_catalog_ui_settings_SettingsViewModel = "com.example.movie_catalog.ui.settings.SettingsViewModel";
+
+      static String com_example_movie_catalog_ui_start_StartViewModel = "com.example.movie_catalog.ui.start.StartViewModel";
+
+      static String com_example_movie_catalog_ui_film_page_FilmPageViewModel = "com.example.movie_catalog.ui.film_page.FilmPageViewModel";
+
+      static String com_example_movie_catalog_ui_home_HomeViewModel = "com.example.movie_catalog.ui.home.HomeViewModel";
+
+      static String com_example_movie_catalog_ui_search_SearchViewModel = "com.example.movie_catalog.ui.search.SearchViewModel";
+
+      static String com_example_movie_catalog_ui_season_SeasonsViewModel = "com.example.movie_catalog.ui.season.SeasonsViewModel";
+
+      @KeepFieldType
+      ListPersonViewModel com_example_movie_catalog_ui_list_person_ListPersonViewModel2;
+
+      @KeepFieldType
+      GalleryViewModel com_example_movie_catalog_ui_gallery_GalleryViewModel2;
+
+      @KeepFieldType
+      FilmographyViewModel com_example_movie_catalog_ui_filmography_FilmographyViewModel2;
+
+      @KeepFieldType
+      ProfileViewModel com_example_movie_catalog_ui_profile_ProfileViewModel2;
+
+      @KeepFieldType
+      ListFilmViewModel com_example_movie_catalog_ui_list_films_ListFilmViewModel2;
+
+      @KeepFieldType
+      PersonViewModel com_example_movie_catalog_ui_person_PersonViewModel2;
+
+      @KeepFieldType
+      ImagesViewModel com_example_movie_catalog_ui_images_ImagesViewModel2;
+
+      @KeepFieldType
+      MainActivityViewModel com_example_movie_catalog_ui_MainActivityViewModel2;
+
+      @KeepFieldType
+      SettingsViewModel com_example_movie_catalog_ui_settings_SettingsViewModel2;
+
+      @KeepFieldType
+      StartViewModel com_example_movie_catalog_ui_start_StartViewModel2;
+
+      @KeepFieldType
+      FilmPageViewModel com_example_movie_catalog_ui_film_page_FilmPageViewModel2;
+
+      @KeepFieldType
+      HomeViewModel com_example_movie_catalog_ui_home_HomeViewModel2;
+
+      @KeepFieldType
+      SearchViewModel com_example_movie_catalog_ui_search_SearchViewModel2;
+
+      @KeepFieldType
+      SeasonsViewModel com_example_movie_catalog_ui_season_SeasonsViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -645,19 +792,19 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     private final ActivityRetainedCImpl activityRetainedCImpl = this;
 
-    @SuppressWarnings("rawtypes")
-    private Provider lifecycleProvider;
+    private Provider<ActivityRetainedLifecycle> provideActivityRetainedLifecycleProvider;
 
-    private ActivityRetainedCImpl(SingletonCImpl singletonCImpl) {
+    private ActivityRetainedCImpl(SingletonCImpl singletonCImpl,
+        SavedStateHandleHolder savedStateHandleHolderParam) {
       this.singletonCImpl = singletonCImpl;
 
-      initialize();
+      initialize(savedStateHandleHolderParam);
 
     }
 
     @SuppressWarnings("unchecked")
-    private void initialize() {
-      this.lifecycleProvider = DoubleCheck.provider(new SwitchingProvider<Object>(singletonCImpl, activityRetainedCImpl, 0));
+    private void initialize(final SavedStateHandleHolder savedStateHandleHolderParam) {
+      this.provideActivityRetainedLifecycleProvider = DoubleCheck.provider(new SwitchingProvider<ActivityRetainedLifecycle>(singletonCImpl, activityRetainedCImpl, 0));
     }
 
     @Override
@@ -667,7 +814,7 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     @Override
     public ActivityRetainedLifecycle getActivityRetainedLifecycle() {
-      return (ActivityRetainedLifecycle) lifecycleProvider.get();
+      return provideActivityRetainedLifecycleProvider.get();
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -688,8 +835,8 @@ public final class DaggerApp_HiltComponents_SingletonC {
       @Override
       public T get() {
         switch (id) {
-          case 0: // dagger.hilt.android.internal.managers.ActivityRetainedComponentManager.Lifecycle 
-          return (T) ActivityRetainedComponentManager_Lifecycle_Factory.newInstance();
+          case 0: // dagger.hilt.android.ActivityRetainedLifecycle 
+          return (T) ActivityRetainedComponentManager_LifecycleModule_ProvideActivityRetainedLifecycleFactory.provideActivityRetainedLifecycle();
 
           default: throw new AssertionError(id);
         }
@@ -747,7 +894,7 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     @Override
     public Set<Boolean> getDisableFragmentGetContextFix() {
-      return Collections.<Boolean>emptySet();
+      return ImmutableSet.<Boolean>of();
     }
 
     @Override
