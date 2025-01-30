@@ -3,7 +3,6 @@ package com.example.movie_catalog.data.api
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.util.Log
-import androidx.core.util.remove
 import com.example.movie_catalog.entity.enumApp.MonthKinopoisk
 import com.example.movie_catalog.data.api.home.getKit.SelectedKit
 import com.example.movie_catalog.entity.*
@@ -14,7 +13,6 @@ import com.example.movie_catalog.entity.enumApp.TypeFilm
 import com.example.movie_catalog.entity.filminfo.InfoFilmSeasons
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.iterator
 import kotlin.collections.shuffle
 
 /*
@@ -52,33 +50,6 @@ class DataSourceAPI @Inject constructor(private val retrofitApi: KinopoiskAPI) {
     //Request a list of films from the premiere category.
     @SuppressLint("SimpleDateFormat")
     suspend fun getPremieres() {
-//        //Preparing date data for a request for premieres
-//        val calendar = Calendar.getInstance()
-//        val currentYear = calendar.get(Calendar.YEAR)
-//        val currentMonth = MonthKinopoisk.values()[calendar.get(Calendar.MONTH)].toString()
-////      Request for premieres
-//        val premieres = retrofitApi.getPremieres(currentYear, currentMonth, DataCentre.headers)
-//        //Calculate date next two weeks in milliseconds
-//        val currentTime = Calendar.getInstance()
-//        currentTime.add(Calendar.WEEK_OF_YEAR, Constants.PREMIERES_WEEKS)
-//        val twoWeeksNext = currentTime.timeInMillis
-//
-//        //Edit list films. We leave the films that will premiere in the next two weeks.
-//        val itemsIterator = premieres.items.iterator()
-//        while (itemsIterator.hasNext()) {
-//            val item = itemsIterator.next()
-//            val premierTime = SimpleDateFormat("yyyy-MM-dd").parse(item.premiereRu).time
-//            if (premierTime >= twoWeeksNext) {
-//                itemsIterator.remove()
-//            }
-//        }
-//        premieres.items.shuffle()    //Mixing the films
-//    // Adding information about the seasons to the movie object
-//        DataCentre.addFilms(premieres)
-////        DataCentre.addFilms(Plug().filmPlug)
-//
-//        //Preparing date data for a request for premieres
-
         val calendar = Calendar.getInstance()
         val currentYear = calendar.get(Calendar.YEAR)
         val currentMonth = MonthKinopoisk.values()[calendar.get(Calendar.MONTH)].toString()
