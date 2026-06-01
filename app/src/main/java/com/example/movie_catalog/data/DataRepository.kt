@@ -38,11 +38,8 @@ class DataRepository @Inject constructor(
 
     //Request additional information about the film and seasons
     suspend fun getInfoFilmSeason(film: Film): Film? {
-        //If the movie has a uploaded posterUrl, then there has already been a request for
+        //If the movie has an uploaded posterUrl, then there has already been a request for
         // full information about the seasons. Otherwise, we make a request.
-//        if (film.posterUrl == null) dataSourceAPI.getInfoFilmSeason(film)
-//        //Choosing the necessary movie
-//        return DataCentre.films.find { it.filmId == film.filmId }
         if (film.posterUrl == null) dataSourceAPI.getInfoFilmSeason(film)
         //Choosing the necessary movie
         val result = DataCentre.films.find { it.filmId == film.filmId }
@@ -85,11 +82,6 @@ class DataRepository @Inject constructor(
     //Get a list of photos for the movie
     suspend fun getImages(film: Film): List<ImageFilm> {
         //If the list of images in DataCenter is empty, we make a request
-//        if (film.images.isEmpty()) {
-//            dataSourceAPI.getImages(film)
-//        }
-//        return DataCentre.films.find { it == film }!!.images
-
         if (film.images.isEmpty()) {
             dataSourceAPI.getImages(film)
         }
@@ -104,19 +96,6 @@ class DataRepository @Inject constructor(
     //Request for additional information on a person
     suspend fun getPersonInfo(person: Person): List<Linker> {
         //If the list of films for person in DataCenter is empty, we make a request
-//        var listLink = DataCentre.linkers.filter { it.person == person }
-//        if (listLink.count() <= 1) {
-//            dataSourceAPI.getPersonInfo(person)
-//            listLink = DataCentre.linkers.filter { it.person == person }
-//        }
-//        //Requesting a poster
-//        listLink.forEach { link ->
-//            link.film?.let { film ->
-//                if (film.posterUrlPreview == null) dataSourceAPI.getInfoFilmSeason(film)
-//            }
-//        }
-//        return listLink
-
         var listLink = DataCentre.linkers.filter { it.person == person }
         if (listLink.count() <= 1) {
             dataSourceAPI.getPersonInfo(person)
@@ -168,17 +147,6 @@ class DataRepository @Inject constructor(
     //Creating an array of data to display premieres
     suspend fun getPremieres(): List<Linker> {
         //Checking the availability of data in DataCenter
-//        var linkers = DataCentre.linkers.filter { it.kit == Kit.PREMIERES }
-//        if (linkers.isEmpty()) {
-//            //If not, we make a request for a resource
-//            dataSourceAPI.getPremieres()
-//            // Select the list of premieres
-//            linkers = DataCentre.linkers.filter { it.kit == Kit.PREMIERES }
-//        }
-//
-//        return linkers
-
-        //Checking the availability of data in DataCenter
         var linkers = DataCentre.linkers.filter { it.kit == Kit.PREMIERES }
         if (linkers.isEmpty()) {
             //If not, we make a request for a resource
@@ -198,16 +166,6 @@ class DataRepository @Inject constructor(
 
     //Select the list of top films
     suspend fun getTop(page: Int, kit: Kit): List<Linker> {
-        //Checking the availability of data in DataCenter
-//        var listBinder = DataCentre.linkers.filter { it.kit == kit }
-//        if (listBinder.isEmpty()) {
-//            //If not, we make a request for a resource
-//            dataSourceAPI.getTop(page, kit)
-//            // Select the list of top movies
-//            listBinder = DataCentre.linkers.filter { it.kit == kit }
-//        }
-//        return listBinder
-
         //Checking the availability of data in DataCenter
         var listBinder = DataCentre.linkers.filter { it.kit == kit }
         if (listBinder.isEmpty()) {
@@ -358,19 +316,6 @@ class DataRepository @Inject constructor(
     //We request a list of collections, calculate the number of films in each of them,
     // and mark which collection a particular film is included in
     fun getCollectionsFilm(filmId: Int): List<CollectionDB> {
-//        //Selecting a count of movies added to the collection
-//        val listCollectionFilmDB = dataSourceDB.getCollections()
-//        if (listCollectionFilmDB.isNotEmpty()) {
-//            listCollectionFilmDB.forEach {
-//                //Selecting a count of movies added to the collection
-//                it.collection?.count = dataSourceDB.getCountFilmCollection(it.idCollection).count()
-//                //There is a movie in this collection
-//                it.collection?.included = dataSourceDB.getFilmInCollection(filmId,it.idCollection)
-////                Log.d("KDS", " count = ${it.count}")
-//            }
-//        }
-//        return listCollectionFilmDB
-
         val listCollectionFilmDB = dataSourceDB.getCollections()
         if (listCollectionFilmDB.isNotEmpty()) {
             listCollectionFilmDB.forEach {
@@ -399,13 +344,6 @@ class DataRepository @Inject constructor(
 
     //Adding a new collection
     fun addCollection(nameCollection: String): CollectionDB? {
-//        //Checking for a collection with the same name
-//        val collection = dataSourceDB.getCollectionRecord(nameCollection)
-//        if (collection == null) {
-//            //Adding a new collection
-//            dataSourceDB.addCollection(CollectionDB(collection = Collection( name= nameCollection)))
-//        } //Returning the id of the new collection
-//        return dataSourceDB.getCollectionRecord(nameCollection)
         return dataSourceDB.getCollectionRecord(nameCollection) ?: run {
             dataSourceDB.addCollection(CollectionDB(collection = Collection(name = nameCollection)))
             dataSourceDB.getCollectionRecord(nameCollection)
@@ -425,19 +363,6 @@ class DataRepository @Inject constructor(
 
     //Forming a selection of viewed movies
     fun getViewedFilms(nameCollection: String = ""): List<Linker> {
-//        val linkers = mutableListOf<Linker>()
-//        val listFilmId = dataSourceDB.getViewedFilmsId()
-//        val kit = Kit.COLLECTION
-//        kit.displayText = nameCollection
-//        listFilmId.forEach { filmId ->
-//            //Creating a link between the movie and the VIEWED selection
-//            DataCentre.films.find { it.filmId == filmId }?.let {
-//                linkers.add(Linker(film = it, kit = kit))
-//            }
-//        }
-//        //Add item for viewing card "clear history"
-//        linkers.add(Linker(Film(),null,null,null,kit))
-//        return linkers
         val kit = Kit.COLLECTION
         getKitParams(kit).displayText = nameCollection
         return dataSourceDB.getViewedFilmsId().mapNotNull { filmId ->
