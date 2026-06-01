@@ -292,6 +292,8 @@ class DataRepository @Inject constructor(
         DataCentre.putKit(item)
     }
 
+    fun getKitParams(kit: Kit) = DataCentre.getKitParams(kit)
+
     //Get a search filter from the time stack
     fun takeSearchFilter() = DataCentre.takeSearchFilter()
 
@@ -436,7 +438,8 @@ class DataRepository @Inject constructor(
 //        //Add item for viewing card "clear history"
 //        linkers.add(Linker(Film(),null,null,null,kit))
 //        return linkers
-        val kit = Kit.COLLECTION.apply { displayText = nameCollection }
+        val kit = Kit.COLLECTION
+        getKitParams(kit).displayText = nameCollection
         return dataSourceDB.getViewedFilmsId().mapNotNull { filmId ->
             DataCentre.films.find { it.filmId == filmId }?.let { Linker(film = it, kit = kit) }
         } + Linker(Film(), null, null, null, kit)
@@ -444,29 +447,12 @@ class DataRepository @Inject constructor(
 
     //Get a list of movies from the collection
     fun getFilmsInCollectionName(nameCollection: String = ""): List<Linker> {
-//        val linkers = mutableListOf<Linker>()
-//        //Looking for a collection by name
-//        val idCollect = dataSourceDB.getCollectionRecord(nameCollection)?.idCollection ?: 0
-//        val kit = Kit.COLLECTION
-//        kit.displayText = nameCollection
-//        if (idCollect != 0) {
-//            //Selecting a list of movies from the collection
-//            val listFilmId = dataSourceDB.getListFilmsIdInCollection(idCollect)
-//            listFilmId.forEach { filmId ->
-//                //Adding the movie kit link bundle to the Linkers array
-//                linkers.add( Linker(film = DataCentre.films.find { it.filmId == filmId }, kit = kit))
-//            }// Adding an empty list member
-//            //If you haven't found the collection, then add an empty movie to the array of links
-//            linkers.add(Linker( Film(),null,null,null, kit))
-//        }
-//        return linkers
+        val kit = Kit.COLLECTION
         val idCollect =
             dataSourceDB.getCollectionRecord(nameCollection)?.idCollection ?: return listOf(
-                Linker
-                    (Film(), null, null, null, Kit.COLLECTION.apply
-                { displayText = nameCollection })
+                Linker(Film(), null, null, null, kit.also { getKitParams(it).displayText = nameCollection })
             )
-        val kit = Kit.COLLECTION.apply { displayText = nameCollection }
+        getKitParams(kit).displayText = nameCollection
         return dataSourceDB.getListFilmsIdInCollection(idCollect).map { filmId ->
             Linker(film = DataCentre.films.find { it.filmId == filmId }, kit = kit)
         } + Linker(Film(), null, null, null, kit)

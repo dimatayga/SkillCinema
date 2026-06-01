@@ -90,13 +90,14 @@ class DataSourceAPI @Inject constructor(private val retrofitApi: KinopoiskAPI) {
     suspend fun getFilters(page: Int, kit: Kit): List<Linker> {
         //Get filter data
         val filter = DataCentre.takeSearchFilter()
+        val kitParams = DataCentre.getKitParams(kit)
         return when (kit) {
             //Get a list of movies for a random set of country genre
             Kit.RANDOM1 -> DataCentre.addFilms(
                 retrofitApi.getFilters(
                     page,
                     SortingField.RATING.toString(), TypeFilm.FILM.toString(), 1, 10,
-                    1990, 2100, "", kit.countryID, kit.genreID, DataCentre.headers
+                    1990, 2100, "", kitParams.countryID, kitParams.genreID, DataCentre.headers
                 ), kit
             )
             //Get a list of movies for a set of country genre
@@ -104,7 +105,7 @@ class DataSourceAPI @Inject constructor(private val retrofitApi: KinopoiskAPI) {
                 retrofitApi.getFilters(
                     page,
                     SortingField.RATING.toString(), TypeFilm.FILM.toString(), 1, 10,
-                    1990, 2100, "", kit.countryID, kit.genreID, DataCentre.headers
+                    1990, 2100, "", kitParams.countryID, kitParams.genreID, DataCentre.headers
                 ), kit
             )
             //Get a list of movies by the specified parameters

@@ -1,7 +1,6 @@
 package com.example.movie_catalog.animations
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -23,54 +22,57 @@ During the loading process, the image changes size and context.
 Performs exception handling.
 Before loading the image, the gradient animation is displayed.
  */
-class LoadImageURLShow  @Inject constructor() {
-    var animationCard = AnimationDrawable()
-    @Inject
-    lateinit var cont: Context
+class LoadImageURLShow @Inject constructor() {
+    
     @SuppressLint("ResourceAsColor")
-    fun setAnimation(view: ImageView, imageURL: String?, roundedCorners:Int, centerCrop:Boolean = true){
-
+    fun setAnimation(view: ImageView, imageURL: String?, roundedCorners: Int, centerCrop: Boolean = true) {
         val radius = view.resources.getDimensionPixelOffset(roundedCorners)
+        val context = view.context
+        var animationCard: AnimationDrawable? = null
+        
         // Start of the image loading animation.
-        if (view.background != null) {
+        if (view.background is AnimationDrawable) {
             animationCard = view.background as AnimationDrawable
             animationCard.apply {
                 setEnterFadeDuration(1000)
                 setExitFadeDuration(1000)
                 start()
             }
-//            Log.d("KDS","LoadImageURLShow.setAnimation animation start $imageURL")
         }
+        
         //If there is no link to the image, then we substitute a stub and stop the animation.
-        if (imageURL == ""){
+        if (imageURL.isNullOrEmpty()) {
             view.setImageResource(R.drawable.ic_baseline_image_not_supported_24)
-            animationCard.stop()
-        } else if (imageURL != null){
-        //Starting the image loading process.
-            //Options for transforming the image after loading - rounding the corners and centering in the center
+            animationCard?.stop()
+            view.background?.alpha = 0
+        } else {
+            //Starting the image loading process.
             val option = if (!centerCrop) RequestOptions().transform(RoundedCorners(radius))
             else RequestOptions().transform(CenterCrop(), RoundedCorners(radius))
-            Glide
-                .with(view)
+            
+            Glide.with(view)
                 .load(imageURL)
-                    //If there is a loading error, we substitute a stub
                 .fallback(R.drawable.ic_baseline_image_not_supported_24)
                 .apply(option)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(object: RequestListener<Drawable> {
-                    //If an error occurs, we output a message
-                    override fun onLoadFailed( resource: GlideException?, model: Any?,
-                        target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        Toast.makeText(cont,"Error load image",Toast.LENGTH_SHORT).show()
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        resource: GlideException?, model: Any?,
+                        target: Target<Drawable>?, isFirstResource: Boolean
+                    ): Boolean {
+                        Toast.makeText(context, "Error load image", Toast.LENGTH_SHORT).show()
+                        animationCard?.stop()
+                        view.background?.alpha = 0
                         return false
                     }
-                    //When loading successfully, we stop the animation
-                    override fun onResourceReady(resource: Drawable?, model: Any?,
+
+                    override fun onResourceReady(
+                        resource: Drawable?, model: Any?,
                         target: Target<Drawable>?, dataSource: com.bumptech.glide.load.DataSource?,
-                        isFirstResource: Boolean): Boolean {
-                        animationCard.stop()
-                        view.background?.alpha = (0)
-//                        Log.d("KDS","LoadImageURLShow.setAnimation animation stop $imageURL")
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        animationCard?.stop()
+                        view.background?.alpha = 0
                         return false
                     }
                 })

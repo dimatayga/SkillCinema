@@ -57,15 +57,17 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val kit = Kit.COLLECTION
+        
         //Display a list of viewed movies
-        kit.nameKit = R.string.viewed_kit
-        kit.displayText = context?.getString(R.string.viewed_kit) ?: ""
-        processingView(binding.inclViewedFilm, viewedAdapter, viewModel.viewedFilm, kit)
+        val viewedKit = Kit.VIEWED
+        viewModel.getKitParams(viewedKit).displayText = context?.getString(R.string.viewed_kit) ?: ""
+        processingView(binding.inclViewedFilm, viewedAdapter, viewModel.viewedFilm, viewedKit)
+        
         //Display a list bookmark movies
-        kit.nameKit = R.string.bookmark_kit
-        kit.displayText = context?.getString(R.string.bookmark_head) ?: ""
-        processingView(binding.inclInterestingFilm, bookmarkAdapter, viewModel.bookmarkFilm, kit)
+        val bookmarkKit = Kit.BOOKMARKS
+        viewModel.getKitParams(bookmarkKit).displayText = context?.getString(R.string.bookmark_head) ?: ""
+        processingView(binding.inclInterestingFilm, bookmarkAdapter, viewModel.bookmarkFilm, bookmarkKit)
+
         //Display card view collection
         processingViewCollection()
 
@@ -90,7 +92,7 @@ class ProfileFragment : Fragment() {
                                flowFilms: StateFlow<List<Linker>>, kit: Kit){
         with(view){
             //Output of name list
-            kitName.text = kit.displayText
+            kitName.text = viewModel.getKitParams(kit).displayText
             //Connecting adapter
             filmRecyclerHorizontal.adapter = adapter
             //Received and transferred to the recycler a list of films
@@ -133,9 +135,7 @@ class ProfileFragment : Fragment() {
             //Showing the full list of movies in the collection.
             is String -> {
                 val kit = Kit.COLLECTION
-                kit.nameKit = 0
-//                val namecollection = context?.getString(kit.nameKit) ?: ""
-                kit.displayText = item
+                viewModel.getKitParams(kit).displayText = item
                 viewModel.putKit(kit)
                 findNavController().navigate(R.id.action_nav_profile_to_nav_listFilm)
             }

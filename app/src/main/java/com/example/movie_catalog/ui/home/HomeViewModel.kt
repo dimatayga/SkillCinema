@@ -61,18 +61,18 @@ class HomeViewModel @Inject constructor(private var dataRepository: DataReposito
                     //We send it to the UI for display
                     _namekit.value = kit
                     //Converting the received data to send a request for a list of movies
-                    Kit.RANDOM1.genreID = kit.genre1.id ?: 0
-                    Kit.RANDOM1.countryID = kit.country1.id ?: 0
-                    Kit.RANDOM2.genreID = kit.genre2.id ?: 0
-                    Kit.RANDOM2.countryID = kit.country2.id ?: 0
+                    dataRepository.getKitParams(Kit.RANDOM1).genreID = kit.genre1.id ?: 0
+                    dataRepository.getKitParams(Kit.RANDOM1).countryID = kit.country1.id ?: 0
+                    dataRepository.getKitParams(Kit.RANDOM2).genreID = kit.genre2.id ?: 0
+                    dataRepository.getKitParams(Kit.RANDOM2).countryID = kit.country2.id ?: 0
                     if (kit.genre1.genre != null || kit.country1.country != null) {
-                        Kit.RANDOM1.displayText  =
+                        dataRepository.getKitParams(Kit.RANDOM1).displayText  =
                             kit.genre1.genre.toString().replaceFirstChar{it.uppercase()}.trim() + " " +
                             kit.country1.country.toString().replaceFirstChar{it.uppercase()}.trim()
                     }
 
                     if (kit.genre2.genre != null || kit.country2.country != null) {
-                        Kit.RANDOM2.displayText =
+                        dataRepository.getKitParams(Kit.RANDOM2).displayText =
                             kit.genre2.genre.toString().replaceFirstChar{it.uppercase()}.trim() + " " +
                             kit.country2.country.toString().replaceFirstChar{it.uppercase()}.trim()
                     }

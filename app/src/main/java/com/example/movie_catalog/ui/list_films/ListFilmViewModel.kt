@@ -56,7 +56,9 @@ class ListFilmViewModel @Inject constructor(
         if (localKit != null) {
             when (localKit){
                 Kit.PREMIERES -> getPremieres()
-                Kit.COLLECTION -> localKit?.let { getDataCollection( it.displayText) }
+                Kit.COLLECTION -> localKit?.let { getDataCollection( dataRepository.getKitParams(it).displayText) }
+                Kit.VIEWED -> getDataCollection(dataRepository.getKitParams(Kit.VIEWED).displayText)
+                Kit.BOOKMARKS -> getDataCollection(dataRepository.getKitParams(Kit.BOOKMARKS).displayText)
                 Kit.PERSON -> localPerson?.let { getListLinkerForPerson(it) }
                 Kit.SIMILAR -> localFilm?.let{ getListLinkerForSimilar(it) }
                 else -> {} // Other case working PagingData
@@ -112,13 +114,14 @@ class ListFilmViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 localKit?.let { kit ->
-                    when(kit.nameKit) {
-                       R.string.viewed_kit -> dataRepository.clearViewedFilm()
-                       R.string.bookmark_kit -> dataRepository.clearBookmarkFilm()
-                       else -> dataRepository.clearCollection(kit.displayText)
+                    val displayText = dataRepository.getKitParams(kit).displayText
+                    when(kit) {
+                       Kit.VIEWED -> dataRepository.clearViewedFilm()
+                       Kit.BOOKMARKS -> dataRepository.clearBookmarkFilm()
+                       else -> dataRepository.clearCollection(displayText)
                     }
                     //Refresh a list film of collection
-                    getDataCollection(kit.displayText)
+                    getDataCollection(displayText)
                 }
             }.fold(
                 onSuccess = { },
@@ -130,6 +133,7 @@ class ListFilmViewModel @Inject constructor(
     fun putFilm(film: Film){
         dataRepository.putFilm(film)
     }
+    fun getKitParams(kit: Kit) = dataRepository.getKitParams(kit)
     //Get a saved kit object
     private fun takeKit(){
         val kit = dataRepository.takeKit()

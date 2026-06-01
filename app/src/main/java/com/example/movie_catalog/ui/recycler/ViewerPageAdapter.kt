@@ -75,7 +75,7 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
                 .inflate(LayoutInflater.from(parent.context), parent, false))
             //The list of type images for movie
             R.layout.item_viewer -> GalleryVH(ItemViewerBinding
-                .inflate(LayoutInflater.from(parent.context), parent, false))
+                .inflate(LayoutInflater.from(parent.context), parent, false), onClick)
             else -> throw IllegalArgumentException("Unsupported layout") // in case populated with a model we don't know how to display.
         }
     }
@@ -100,8 +100,6 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
                     //Preparing view tabs for the gallery
                     ModeViewer.GALLERY -> {
                         val gallery = items as Gallery
-                        //Creating an adapter for the viewpager body
-                        val imageAdapter = SimpleAdapterAny ({ onClickImagesAdapter(null)},1)
                         //Connecting layout manager
                         holder.binding.recyclerImage.layoutManager = GridLayoutManager(contextClass, 2).also {
                             //Changing the markup depending on the image number
@@ -113,33 +111,30 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
                             }
                         }
                         //Connecting adapter to recyclerview
-                        holder.binding.recyclerImage.adapter = imageAdapter
+                        holder.binding.recyclerImage.adapter = holder.imageAdapter
                         //Creating a list corresponding to this tab
                         val listImage = gallery.images.filter { it.imageGroup == gallery.tabs[position].first }
                         ////Creating a list corresponding to this tab. Loading the created list.
                         // If the list is empty, load the stubs
                         if (listImage.isEmpty()){
-                            imageAdapter.setList(listOf(
+                            holder.imageAdapter.setList(listOf(
                                 ImageFilm("","", null),
                                 ImageFilm("","", null)
                             ))
                         }else{
-                            imageAdapter.setList(listImage)
+                            holder.imageAdapter.setList(listImage)
                         }
                     }
                     //Preparing view tabs for the filmography
                     ModeViewer.FILMOGRAPHY -> {
                         val person = items as FilmographyData
-                        //Creating an adapter for the viewpager body
-                        val filmAdapter = ListFilmAdapter (0, ModeViewer.FILMOGRAPHY,
-                            { film -> onClickImagesAdapter(film)},{})
                         //Connecting layout manager
                         holder.binding.recyclerImage.layoutManager = LinearLayoutManager(contextClass,
                             RecyclerView.VERTICAL, false)
                         //Connecting adapter
-                        holder.binding.recyclerImage.adapter = filmAdapter
+                        holder.binding.recyclerImage.adapter = holder.filmAdapter
                         //Creating a list corresponding to this tab. Loading the created list.
-                        filmAdapter.setListFilm(person.linkers.filter{ it.profKey == person.tabsKey[position].first})
+                        holder.filmAdapter.setListFilm(person.linkers.filter{ it.profKey == person.tabsKey[position].first})
                     }
                     else -> {}
                 }
@@ -151,13 +146,6 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
                 animationCard.setAnimation(holder.binding.photo, gallery.images[position].imageUrl, R.dimen.card_gallery_icon_radius, false)
             }
             is ImageStartHV -> {
-                //Image output in start fragment
-//                val listImageStart = items as List<*>
-//                holder.binding.ivIcon.setImageResource(listImageStart[position].imageResource!!)
-//                holder.binding.ivIndicator.setImageResource(listImageStart[position].imageIndicator!!)
-//                holder.binding.tvSignature.text =
-//                    contextClass.resources.getString(listImageStart[position].signature!!)
-
                 //Image output in start fragment
                 if (items is List<*>) {
                     val listImageStart = items as List<*>
@@ -176,16 +164,14 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
             is SeasonVH -> {
                 //Output of information on the series in the series
                 val film = items as Film
-                //Creating an adapter for the viewpager body
-                val episodeAdapter = SimpleAdapterAny({})
                 //Connecting layout manager
                 holder.binding.recycler.layoutManager = LinearLayoutManager(contextClass,
                     RecyclerView.VERTICAL, false)
                 //Connecting adapter
-                holder.binding.recycler.adapter = episodeAdapter
+                holder.binding.recycler.adapter = holder.episodeAdapter
                 //Loading the created list.
                 film.listSeasons?.get(position)?.let {
-                    episodeAdapter.setList(it.episodes!!)
+                    holder.episodeAdapter.setList(it.episodes!!)
                     holder.binding.tvHeader.text = it.number.toString() + " " + contextClass.getString(R.string.viewer_seasons_season) + ", " +
                             it.episodes.size.toString() + " " + contextClass.getString(R.string.quantity_series)
                 }
@@ -193,12 +179,13 @@ class ViewerPageAdapter (private val mode: ModeViewer, private val onClick: (Any
             else -> {println("Error: items is not a List in ImageStartHV")}
         }
     }
-
-    private fun onClickImagesAdapter(film: Film?) {
-        onClick(film)
-    }
 }
 class ImageHV(val binding: ItemViewerImageRecyclerBinding): RecyclerView.ViewHolder(binding.root)
 class ImageStartHV(val binding: ItemViewerImageStartBinding): RecyclerView.ViewHolder(binding.root)
-class SeasonVH(val binding: ItemViewerSeasonBinding): RecyclerView.ViewHolder(binding.root)
-class GalleryVH(val binding: ItemViewerBinding): RecyclerView.ViewHolder(binding.root)
+class SeasonVH(val binding: ItemViewerSeasonBinding): RecyclerView.ViewHolder(binding.root) {
+    val episodeAdapter = SimpleAdapterAny({})
+}
+class GalleryVH(val binding: ItemViewerBinding, onClick: (Any?) -> Unit): RecyclerView.ViewHolder(binding.root) {
+    val imageAdapter = SimpleAdapterAny ({ onClick(null) }, 1)
+    val filmAdapter = ListFilmAdapter (0, ModeViewer.FILMOGRAPHY, { film -> onClick(film) }, {})
+}

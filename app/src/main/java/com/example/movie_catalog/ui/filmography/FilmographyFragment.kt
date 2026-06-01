@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.onEach
 class FilmographyFragment : Fragment() {
 
     companion object {
-        fun newInstance() = GalleryFragment()
+        fun newInstance() = FilmographyFragment()
     }
 
     private var _binding: FragmentFilmographyBinding? = null

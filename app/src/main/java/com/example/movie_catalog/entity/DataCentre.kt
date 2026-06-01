@@ -28,6 +28,7 @@ object DataCentre {
     private var currentKit: Kit? = null
     private var currentFilm: Film? = null
     private var currentPerson: Person? = null
+    private val kitParamsMap = mutableMapOf<Kit, KitParams>()
     private var searchFilter = SearchFilter(
         country = CountryIdDTO(id = 1, country = "США"),
         genre = GenreIdDTO(id = 11, genre = "боевик"),
@@ -154,13 +155,6 @@ object DataCentre {
         }
     }
 
-    //    fun addImage(film: Film, tab: ImageGroup, filmImageDTO: FilmImageDTO) {
-//        filmImageDTO.items.forEach {
-//            film.images.add(
-//                ImageFilm(imageUrl = it.imageUrl, previewUrl = it.previewUrl, imageGroup = tab)
-//            )
-//        }
-//    }
     fun addImage(film: Film, tab: ImageGroup, filmImageDTO: FilmImageDTO) {
         val newImages = film.images.toMutableList()
         filmImageDTO.items.forEach {
@@ -265,70 +259,20 @@ object DataCentre {
         }
     }
 
-    fun takeFilm(): Film? {
-        val it = currentFilm
-        currentFilm = null
-        return it
-    }
+    fun takeFilm(): Film? = currentFilm
+    fun putFilm(film: Film) { currentFilm = film }
 
-    fun putFilm(film: Film) {
-        currentFilm = film
-    }
+    fun takePerson(): Person? = currentPerson
+    fun putPerson(person: Person) { currentPerson = person }
 
-    fun takePerson(): Person? {
-        val it = currentPerson
-        currentPerson = null
-        return it
-    }
+    fun takeKit(): Kit? = currentKit
+    fun putKit(kit: Kit) { currentKit = kit }
 
-    fun putPerson(person: Person) {
-        currentPerson = person
-    }
+    fun getKitParams(kit: Kit): KitParams = kitParamsMap.getOrPut(kit) { KitParams() }
 
-    fun takeKit(): Kit? {
-        val it = currentKit
-        currentKit = null
-        return it
-    }
+    fun takeSearchFilter(): SearchFilter = searchFilter.copy()
+    fun putSearchFilter(it: SearchFilter) { searchFilter = it.copy() }
 
-    fun putKit(kit: Kit) {
-        currentKit = kit
-    }
-
-    fun putSearchFilter(it: SearchFilter) {
-        searchFilter.typeFilm = it.typeFilm
-        searchFilter.country = it.country
-        searchFilter.genre = it.genre
-        searchFilter.year = it.year
-        searchFilter.rating = it.rating
-        searchFilter.viewed = it.viewed
-        searchFilter.sorting = it.sorting
-        searchFilter.keyWord = it.keyWord
-    }
-
-    fun takeSearchFilter(): SearchFilter {
-        return SearchFilter(
-            typeFilm = searchFilter.typeFilm,
-            country = searchFilter.country,
-            genre = searchFilter.genre,
-            year = searchFilter.year,
-            rating = searchFilter.rating,
-            viewed = searchFilter.viewed,
-            sorting = searchFilter.sorting,
-            keyWord = searchFilter.keyWord
-        )
-    }
-    //###############################################################################################
-
-    fun takeJobPerson(): String? {
-        val it = currentJobPerson
-        currentJobPerson = null
-        return it
-    }
-
-    fun putJobPerson(id: String) {
-        currentJobPerson = id
-    }
-
+    fun takeJobPerson(): String? = currentJobPerson
+    fun putJobPerson(id: String) { currentJobPerson = id }
 }
-

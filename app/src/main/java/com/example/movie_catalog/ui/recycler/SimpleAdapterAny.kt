@@ -147,32 +147,29 @@ class SimpleAdapterAny @Inject constructor(private val onClick: (Any) -> Unit, p
             is EpisodeVH -> {
                 // Show name
                 if (item is EpisodeDTO) {
+                    val episodePrefix = contextClass.getString(R.string.episode)
                     if (item.nameRu != null && item.nameEn != null) {
-                        holder.binding.tvNameEn.text = item.episodeNumber.toString() + " " +
-                                contextClass.getString(R.string.episode) + ", " + item.nameEn.toString()
+                        holder.binding.tvNameEn.text = "${item.episodeNumber} $episodePrefix, ${item.nameEn}"
                         holder.binding.tvNameRu.text = item.nameRu.toString()
-                    } else if (item.nameRu == null && item.nameEn != null) {
-                        holder.binding.tvNameEn.text = item.episodeNumber.toString() + " " +
-                                contextClass.getString(R.string.episode) + ", " + item.nameEn.toString()
-                        holder.binding.tvNameRu.visibility = View.INVISIBLE
-                        holder.binding.tvNameRu.layoutParams.height = 0
+                        holder.binding.tvNameRu.visibility = View.VISIBLE
                     } else {
-                        holder.binding.tvNameEn.text = item.episodeNumber.toString() + " " +
-                                contextClass.getString(R.string.episode) + ", " + item.nameRu.toString()
-                        holder.binding.tvNameRu.visibility = View.INVISIBLE
-                        holder.binding.tvNameRu.layoutParams.height = 0
+                        val displayName = item.nameEn ?: item.nameRu ?: ""
+                        holder.binding.tvNameEn.text = "${item.episodeNumber} $episodePrefix, $displayName"
+                        holder.binding.tvNameRu.visibility = View.GONE
                     }
+                    
                     if (item.synopsis == null) {
-                        holder.binding.tvDescription.visibility = View.INVISIBLE
-                        holder.binding.tvDescription.layoutParams.height = 0
+                        holder.binding.tvDescription.visibility = View.GONE
                     } else {
                         holder.binding.tvDescription.text = item.synopsis
+                        holder.binding.tvDescription.visibility = View.VISIBLE
                     }
+                    
                     if (item.releaseDate == null) {
-                        holder.binding.tvData.visibility = View.INVISIBLE
-                        holder.binding.tvData.layoutParams.height = 0
+                        holder.binding.tvData.visibility = View.GONE
                     } else {
                         holder.binding.tvData.text = item.releaseDate
+                        holder.binding.tvData.visibility = View.VISIBLE
                     }
                 }
             }

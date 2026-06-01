@@ -487,36 +487,48 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_example_movie_catalog_ui_home_HomeViewModel = "com.example.movie_catalog.ui.home.HomeViewModel";
+      static String com_example_movie_catalog_ui_settings_SettingsViewModel = "com.example.movie_catalog.ui.settings.SettingsViewModel";
+
+      static String com_example_movie_catalog_ui_film_page_FilmPageViewModel = "com.example.movie_catalog.ui.film_page.FilmPageViewModel";
+
+      static String com_example_movie_catalog_ui_start_StartViewModel = "com.example.movie_catalog.ui.start.StartViewModel";
+
+      static String com_example_movie_catalog_ui_MainActivityViewModel = "com.example.movie_catalog.ui.MainActivityViewModel";
+
+      static String com_example_movie_catalog_ui_season_SeasonsViewModel = "com.example.movie_catalog.ui.season.SeasonsViewModel";
 
       static String com_example_movie_catalog_ui_person_PersonViewModel = "com.example.movie_catalog.ui.person.PersonViewModel";
 
       static String com_example_movie_catalog_ui_images_ImagesViewModel = "com.example.movie_catalog.ui.images.ImagesViewModel";
 
-      static String com_example_movie_catalog_ui_season_SeasonsViewModel = "com.example.movie_catalog.ui.season.SeasonsViewModel";
+      static String com_example_movie_catalog_ui_profile_ProfileViewModel = "com.example.movie_catalog.ui.profile.ProfileViewModel";
 
-      static String com_example_movie_catalog_ui_MainActivityViewModel = "com.example.movie_catalog.ui.MainActivityViewModel";
-
-      static String com_example_movie_catalog_ui_filmography_FilmographyViewModel = "com.example.movie_catalog.ui.filmography.FilmographyViewModel";
-
-      static String com_example_movie_catalog_ui_start_StartViewModel = "com.example.movie_catalog.ui.start.StartViewModel";
-
-      static String com_example_movie_catalog_ui_search_SearchViewModel = "com.example.movie_catalog.ui.search.SearchViewModel";
-
-      static String com_example_movie_catalog_ui_settings_SettingsViewModel = "com.example.movie_catalog.ui.settings.SettingsViewModel";
-
-      static String com_example_movie_catalog_ui_list_films_ListFilmViewModel = "com.example.movie_catalog.ui.list_films.ListFilmViewModel";
+      static String com_example_movie_catalog_ui_home_HomeViewModel = "com.example.movie_catalog.ui.home.HomeViewModel";
 
       static String com_example_movie_catalog_ui_gallery_GalleryViewModel = "com.example.movie_catalog.ui.gallery.GalleryViewModel";
 
-      static String com_example_movie_catalog_ui_profile_ProfileViewModel = "com.example.movie_catalog.ui.profile.ProfileViewModel";
+      static String com_example_movie_catalog_ui_search_SearchViewModel = "com.example.movie_catalog.ui.search.SearchViewModel";
 
-      static String com_example_movie_catalog_ui_film_page_FilmPageViewModel = "com.example.movie_catalog.ui.film_page.FilmPageViewModel";
+      static String com_example_movie_catalog_ui_filmography_FilmographyViewModel = "com.example.movie_catalog.ui.filmography.FilmographyViewModel";
+
+      static String com_example_movie_catalog_ui_list_films_ListFilmViewModel = "com.example.movie_catalog.ui.list_films.ListFilmViewModel";
 
       static String com_example_movie_catalog_ui_list_person_ListPersonViewModel = "com.example.movie_catalog.ui.list_person.ListPersonViewModel";
 
       @KeepFieldType
-      HomeViewModel com_example_movie_catalog_ui_home_HomeViewModel2;
+      SettingsViewModel com_example_movie_catalog_ui_settings_SettingsViewModel2;
+
+      @KeepFieldType
+      FilmPageViewModel com_example_movie_catalog_ui_film_page_FilmPageViewModel2;
+
+      @KeepFieldType
+      StartViewModel com_example_movie_catalog_ui_start_StartViewModel2;
+
+      @KeepFieldType
+      MainActivityViewModel com_example_movie_catalog_ui_MainActivityViewModel2;
+
+      @KeepFieldType
+      SeasonsViewModel com_example_movie_catalog_ui_season_SeasonsViewModel2;
 
       @KeepFieldType
       PersonViewModel com_example_movie_catalog_ui_person_PersonViewModel2;
@@ -525,34 +537,22 @@ public final class DaggerApp_HiltComponents_SingletonC {
       ImagesViewModel com_example_movie_catalog_ui_images_ImagesViewModel2;
 
       @KeepFieldType
-      SeasonsViewModel com_example_movie_catalog_ui_season_SeasonsViewModel2;
+      ProfileViewModel com_example_movie_catalog_ui_profile_ProfileViewModel2;
 
       @KeepFieldType
-      MainActivityViewModel com_example_movie_catalog_ui_MainActivityViewModel2;
-
-      @KeepFieldType
-      FilmographyViewModel com_example_movie_catalog_ui_filmography_FilmographyViewModel2;
-
-      @KeepFieldType
-      StartViewModel com_example_movie_catalog_ui_start_StartViewModel2;
-
-      @KeepFieldType
-      SearchViewModel com_example_movie_catalog_ui_search_SearchViewModel2;
-
-      @KeepFieldType
-      SettingsViewModel com_example_movie_catalog_ui_settings_SettingsViewModel2;
-
-      @KeepFieldType
-      ListFilmViewModel com_example_movie_catalog_ui_list_films_ListFilmViewModel2;
+      HomeViewModel com_example_movie_catalog_ui_home_HomeViewModel2;
 
       @KeepFieldType
       GalleryViewModel com_example_movie_catalog_ui_gallery_GalleryViewModel2;
 
       @KeepFieldType
-      ProfileViewModel com_example_movie_catalog_ui_profile_ProfileViewModel2;
+      SearchViewModel com_example_movie_catalog_ui_search_SearchViewModel2;
 
       @KeepFieldType
-      FilmPageViewModel com_example_movie_catalog_ui_film_page_FilmPageViewModel2;
+      FilmographyViewModel com_example_movie_catalog_ui_filmography_FilmographyViewModel2;
+
+      @KeepFieldType
+      ListFilmViewModel com_example_movie_catalog_ui_list_films_ListFilmViewModel2;
 
       @KeepFieldType
       ListPersonViewModel com_example_movie_catalog_ui_list_person_ListPersonViewModel2;
@@ -647,63 +647,33 @@ public final class DaggerApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_example_movie_catalog_ui_film_page_FilmPageViewModel = "com.example.movie_catalog.ui.film_page.FilmPageViewModel";
+
+      static String com_example_movie_catalog_ui_home_HomeViewModel = "com.example.movie_catalog.ui.home.HomeViewModel";
+
       static String com_example_movie_catalog_ui_list_person_ListPersonViewModel = "com.example.movie_catalog.ui.list_person.ListPersonViewModel";
-
-      static String com_example_movie_catalog_ui_gallery_GalleryViewModel = "com.example.movie_catalog.ui.gallery.GalleryViewModel";
-
-      static String com_example_movie_catalog_ui_filmography_FilmographyViewModel = "com.example.movie_catalog.ui.filmography.FilmographyViewModel";
-
-      static String com_example_movie_catalog_ui_profile_ProfileViewModel = "com.example.movie_catalog.ui.profile.ProfileViewModel";
-
-      static String com_example_movie_catalog_ui_list_films_ListFilmViewModel = "com.example.movie_catalog.ui.list_films.ListFilmViewModel";
-
-      static String com_example_movie_catalog_ui_person_PersonViewModel = "com.example.movie_catalog.ui.person.PersonViewModel";
-
-      static String com_example_movie_catalog_ui_images_ImagesViewModel = "com.example.movie_catalog.ui.images.ImagesViewModel";
 
       static String com_example_movie_catalog_ui_MainActivityViewModel = "com.example.movie_catalog.ui.MainActivityViewModel";
 
       static String com_example_movie_catalog_ui_settings_SettingsViewModel = "com.example.movie_catalog.ui.settings.SettingsViewModel";
 
-      static String com_example_movie_catalog_ui_start_StartViewModel = "com.example.movie_catalog.ui.start.StartViewModel";
+      static String com_example_movie_catalog_ui_filmography_FilmographyViewModel = "com.example.movie_catalog.ui.filmography.FilmographyViewModel";
 
-      static String com_example_movie_catalog_ui_film_page_FilmPageViewModel = "com.example.movie_catalog.ui.film_page.FilmPageViewModel";
-
-      static String com_example_movie_catalog_ui_home_HomeViewModel = "com.example.movie_catalog.ui.home.HomeViewModel";
+      static String com_example_movie_catalog_ui_images_ImagesViewModel = "com.example.movie_catalog.ui.images.ImagesViewModel";
 
       static String com_example_movie_catalog_ui_search_SearchViewModel = "com.example.movie_catalog.ui.search.SearchViewModel";
 
       static String com_example_movie_catalog_ui_season_SeasonsViewModel = "com.example.movie_catalog.ui.season.SeasonsViewModel";
 
-      @KeepFieldType
-      ListPersonViewModel com_example_movie_catalog_ui_list_person_ListPersonViewModel2;
+      static String com_example_movie_catalog_ui_gallery_GalleryViewModel = "com.example.movie_catalog.ui.gallery.GalleryViewModel";
 
-      @KeepFieldType
-      GalleryViewModel com_example_movie_catalog_ui_gallery_GalleryViewModel2;
+      static String com_example_movie_catalog_ui_person_PersonViewModel = "com.example.movie_catalog.ui.person.PersonViewModel";
 
-      @KeepFieldType
-      FilmographyViewModel com_example_movie_catalog_ui_filmography_FilmographyViewModel2;
+      static String com_example_movie_catalog_ui_start_StartViewModel = "com.example.movie_catalog.ui.start.StartViewModel";
 
-      @KeepFieldType
-      ProfileViewModel com_example_movie_catalog_ui_profile_ProfileViewModel2;
+      static String com_example_movie_catalog_ui_list_films_ListFilmViewModel = "com.example.movie_catalog.ui.list_films.ListFilmViewModel";
 
-      @KeepFieldType
-      ListFilmViewModel com_example_movie_catalog_ui_list_films_ListFilmViewModel2;
-
-      @KeepFieldType
-      PersonViewModel com_example_movie_catalog_ui_person_PersonViewModel2;
-
-      @KeepFieldType
-      ImagesViewModel com_example_movie_catalog_ui_images_ImagesViewModel2;
-
-      @KeepFieldType
-      MainActivityViewModel com_example_movie_catalog_ui_MainActivityViewModel2;
-
-      @KeepFieldType
-      SettingsViewModel com_example_movie_catalog_ui_settings_SettingsViewModel2;
-
-      @KeepFieldType
-      StartViewModel com_example_movie_catalog_ui_start_StartViewModel2;
+      static String com_example_movie_catalog_ui_profile_ProfileViewModel = "com.example.movie_catalog.ui.profile.ProfileViewModel";
 
       @KeepFieldType
       FilmPageViewModel com_example_movie_catalog_ui_film_page_FilmPageViewModel2;
@@ -712,10 +682,40 @@ public final class DaggerApp_HiltComponents_SingletonC {
       HomeViewModel com_example_movie_catalog_ui_home_HomeViewModel2;
 
       @KeepFieldType
+      ListPersonViewModel com_example_movie_catalog_ui_list_person_ListPersonViewModel2;
+
+      @KeepFieldType
+      MainActivityViewModel com_example_movie_catalog_ui_MainActivityViewModel2;
+
+      @KeepFieldType
+      SettingsViewModel com_example_movie_catalog_ui_settings_SettingsViewModel2;
+
+      @KeepFieldType
+      FilmographyViewModel com_example_movie_catalog_ui_filmography_FilmographyViewModel2;
+
+      @KeepFieldType
+      ImagesViewModel com_example_movie_catalog_ui_images_ImagesViewModel2;
+
+      @KeepFieldType
       SearchViewModel com_example_movie_catalog_ui_search_SearchViewModel2;
 
       @KeepFieldType
       SeasonsViewModel com_example_movie_catalog_ui_season_SeasonsViewModel2;
+
+      @KeepFieldType
+      GalleryViewModel com_example_movie_catalog_ui_gallery_GalleryViewModel2;
+
+      @KeepFieldType
+      PersonViewModel com_example_movie_catalog_ui_person_PersonViewModel2;
+
+      @KeepFieldType
+      StartViewModel com_example_movie_catalog_ui_start_StartViewModel2;
+
+      @KeepFieldType
+      ListFilmViewModel com_example_movie_catalog_ui_list_films_ListFilmViewModel2;
+
+      @KeepFieldType
+      ProfileViewModel com_example_movie_catalog_ui_profile_ProfileViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

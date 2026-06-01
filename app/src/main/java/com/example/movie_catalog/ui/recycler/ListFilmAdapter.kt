@@ -62,59 +62,62 @@ class ListFilmAdapter @Inject constructor(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ListVH -> {
-                holder.binding.inclFilm.root.visibility = View.INVISIBLE
-                holder.binding.inclShowAll.root.visibility = View.INVISIBLE
-                holder.binding.inclClear.root.visibility = View.INVISIBLE
+                holder.binding.inclFilm.root.visibility = View.GONE
+                holder.binding.inclShowAll.root.visibility = View.GONE
+                holder.binding.inclClear.root.visibility = View.GONE
+                
                 //Add card "Show all"
                 if (quantityItem > 0 && mode != ModeViewer.PROFILE && position > Constants.HOME_QTY_FILM_CARD-2){
                     holder.binding.inclShowAll.root.visibility = View.VISIBLE
                     holder.binding.inclShowAll.oval.setOnClickListener {
-                        linkers[position].kit?.let { kit -> onClickLast(kit) }
+                        linkers.getOrNull(position)?.kit?.let { kit -> onClickLast(kit) }
                     }
                 //Add card "Clear kit"
                 } else if (quantityItem > 0 && mode == ModeViewer.PROFILE &&
                     (( position > Constants.PROFILE_QTY_FILM_CARD-2) || position == linkers.size - 1)){
                     holder.binding.inclClear.root.visibility = View.VISIBLE
                     holder.binding.inclClear.oval.setOnClickListener {
-                        linkers[position].kit?.let { kit -> onClickLast(kit) }
+                        linkers.getOrNull(position)?.kit?.let { kit -> onClickLast(kit) }
                     }
                 //Add card "Clear kit"
                 } else if (quantityItem == 0 && mode == ModeViewer.PROFILE && position == linkers.size - 1){
                     holder.binding.inclClear.root.visibility = View.VISIBLE
                     holder.binding.inclClear.oval.setOnClickListener {
-                        linkers[position].kit?.let { kit -> onClickLast(kit) }
+                        linkers.getOrNull(position)?.kit?.let { kit -> onClickLast(kit) }
                     }
                 //Defining how to display the list
-                }else {
-                    holder.binding.inclFilm.root.visibility = View.VISIBLE
+                } else {
                     val film = linkers.getOrNull(position)?.film
-                    film?.let {
+                    if (film != null) {
+                        holder.binding.inclFilm.root.visibility = View.VISIBLE
                         //Set film name
-                        holder.binding.inclFilm.nameFilm.text =
-                            film.nameRu ?: film.nameEn ?: film.nameOriginal
+                        holder.binding.inclFilm.nameFilm.text = film.nameRu ?: film.nameEn ?: film.nameOriginal
                         //Set film genres.
                         holder.binding.inclFilm.genreFilm.text = film.genresTxt()
                          //Set viewed flag
                         if (film.viewed) {
                             holder.binding.inclFilm.ivViewed.visibility = View.VISIBLE
-                            holder.binding.inclFilm.poster.foreground =
-                                contextClass.getDrawable(R.drawable.gradientviewed)
+                            holder.binding.inclFilm.poster.foreground = contextClass.getDrawable(R.drawable.gradientviewed)
                         } else {
+                            holder.binding.inclFilm.ivViewed.visibility = View.GONE
                             holder.binding.inclFilm.poster.foreground = null
                         }
                         //Set rating
-                        if (film.rating != null) holder.binding.inclFilm.tvRating.text =
-                            film.rating.toString()
-                        else holder.binding.inclFilm.tvRating.visibility = View.INVISIBLE
+                        if (film.rating != null) {
+                            holder.binding.inclFilm.tvRating.text = film.rating.toString()
+                            holder.binding.inclFilm.tvRating.visibility = View.VISIBLE
+                        } else {
+                            holder.binding.inclFilm.tvRating.visibility = View.GONE
+                        }
                         //Set action on click item recyclerView
                         holder.binding.root.setOnClickListener {
                             onClick(film)
                         }
+                        
+                        //Load small poster. Before load image, show waiting animation.
+                        val animationCard = LoadImageURLShow()
+                        animationCard.setAnimation(holder.binding.inclFilm.poster, film.posterUrlPreview, R.dimen.card_film_radius)
                     }
-                    //Load small poster. Before load image, show waiting animation.
-                    val animationCard = LoadImageURLShow()
-                    animationCard.setAnimation(holder.binding.inclFilm.poster,
-                        film?.posterUrlPreview, R.dimen.card_film_radius)
                 }
             }
             is FilmographyVH -> {

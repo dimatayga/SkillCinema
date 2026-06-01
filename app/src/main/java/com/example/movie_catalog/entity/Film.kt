@@ -35,5 +35,20 @@ data class Film(
     var description: String? = null,
     var shortDescription: String? = null
 ) {
-    fun genresTxt(): String = genres.joinToString(",") { it.genre.toString() }
+    fun genresTxt(): String = genres.joinToString(", ") { it.genre.toString() }
+
+    fun getDisplayRating(): String {
+        val r = rating ?: ratingAwait ?: ratingGoodReview ?: ratingImdb
+        return r?.toString()?.trim() ?: ""
+    }
+
+    fun getDisplayName(): String {
+        return nameOriginal?.trim() ?: nameEn?.trim() ?: nameRu?.trim() ?: ""
+    }
+
+    fun getYearGenreText(): String {
+        val yearPart = year?.toString()?.trim() ?: ""
+        val genrePart = genresTxt()
+        return if (yearPart.isNotEmpty()) "$yearPart, $genrePart" else genrePart
+    }
 }

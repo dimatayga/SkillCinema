@@ -69,6 +69,8 @@ class ProfileViewModel @Inject constructor(
         dataRepository.putKit(kit)
     }
 
+    fun getKitParams(kit: Kit) = dataRepository.getKitParams(kit)
+
     fun deleteCollection(collection: Collection) = launchDataLoad {
         dataRepository.deleteCollection(collection)
         _collection.value =
@@ -77,7 +79,7 @@ class ProfileViewModel @Inject constructor(
 
     fun clearCollection(kit: Kit) = launchDataLoad {
         val nameCollection =
-            context.getString(kit.nameKit).takeIf { it.isNotEmpty() } ?: kit.displayText
+            context.getString(kit.nameKit).takeIf { it.isNotEmpty() } ?: getKitParams(kit).displayText
         dataRepository.clearCollection(nameCollection)
         getBookmarkFilm()
         getCollections()

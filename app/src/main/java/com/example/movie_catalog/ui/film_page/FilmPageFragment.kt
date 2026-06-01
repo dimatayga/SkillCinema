@@ -80,94 +80,61 @@ class FilmPageFragment : Fragment() {
     //Displaying the initial part of the page
     @SuppressLint("SetTextI18n", "ResourceType")
     private fun fillPage(filmInfo: Film){
-//Show poster film. Before load image, show waiting animation.
+        //Show poster film. Before load image, show waiting animation.
         val animationCard = LoadImageURLShow()
         animationCard.setAnimation(binding.posterBig.poster, filmInfo.posterUrl, R.dimen.film_page_poster_radius)
-//Show logotype or name russia or name original
+
+        //Show logotype or name russia or name original
         if (!filmInfo.logoUrl.isNullOrEmpty()) {
             Glide.with(binding.posterBig.logotype).load(filmInfo.logoUrl).into(binding.posterBig.logotype)
+            binding.posterBig.logotype.visibility = View.VISIBLE
         } else {
-            binding.posterBig.logotype.visibility=View.INVISIBLE
+            binding.posterBig.logotype.visibility = View.GONE
         }
-        binding.posterBig.nameRuOrig.text = filmInfo.nameRu?.trim() ?: filmInfo.nameOriginal?.trim() ?: ""
-        if ( binding.posterBig.nameRuOrig.text.isNullOrEmpty()){
-            binding.posterBig.nameRuOrig.visibility=View.INVISIBLE
-        }
-//Show rating and other name
-        var stringForTextView = ""
-        if (filmInfo.rating == null) {
-            if (filmInfo.ratingAwait == null){
-                if (filmInfo.ratingGoodReview == null){
-                    if (filmInfo.ratingImdb != null){
-                        stringForTextView = filmInfo.ratingImdb.toString().trim()
-                    }
-                }else { stringForTextView = filmInfo.ratingGoodReview.toString().trim()}
-            }else { stringForTextView = filmInfo.ratingAwait.toString().trim()}
-        }else { stringForTextView = filmInfo.rating.toString().trim()}
 
-        if (filmInfo.nameOriginal != null){
-            stringForTextView = stringForTextView + " " + filmInfo.nameOriginal.toString().trim()
-        } else if (filmInfo.nameEn != null){
-            stringForTextView = stringForTextView + " " + filmInfo.nameEn.toString().trim()
-        } else if (filmInfo.nameRu != null) {
-            stringForTextView = stringForTextView + " " + filmInfo.nameRu.toString().trim()
-        }
-        binding.posterBig.ratingName.text = stringForTextView
-//Show year, genre, quantity seasons,
-        //Add year
-        stringForTextView = if (filmInfo.year != null) filmInfo.year.toString().trim() else ""
-        //Add genres
-        if (stringForTextView != "") stringForTextView += ", "
-        stringForTextView += filmInfo.genresTxt()
+        binding.posterBig.nameRuOrig.text = filmInfo.getDisplayName()
+        binding.posterBig.nameRuOrig.visibility = if (binding.posterBig.nameRuOrig.text.isNullOrEmpty()) View.GONE else View.VISIBLE
 
-        //Add seasons film_info_poster_seasons
+        //Show rating and other name
+        val displayRating = filmInfo.getDisplayRating()
+        val displayName = filmInfo.getDisplayName()
+        binding.posterBig.ratingName.text = if (displayRating.isNotEmpty()) "$displayRating $displayName" else displayName
+
+        //Show year, genre, quantity seasons,
+        var yearGenreText = filmInfo.getYearGenreText()
         if (filmInfo.totalSeasons != null) {
-            stringForTextView += ", " + context?.getString(R.string.film_info_poster_seasons) + filmInfo.totalSeasons.toString().trim()
+            yearGenreText += ", " + (context?.getString(R.string.film_info_poster_seasons) ?: "") + filmInfo.totalSeasons.toString().trim()
         }
-        binding.posterBig.yearGenreOther.text = stringForTextView
-//Show short descriptions
-        var description = filmInfo.shortDescription ?: ""
-        description += filmInfo.description ?: ""
+        binding.posterBig.yearGenreOther.text = yearGenreText
+
+        //Show short descriptions
+        val fullDescription = (filmInfo.shortDescription ?: "") + (filmInfo.description ?: "")
+        
         //Animation description
         binding.fragmFilmInfoLinear.layoutTransition = LayoutTransition().apply {
             setDuration(600)
             enableTransitionType(LayoutTransition.CHANGING)
         }
-//        Log.d("KDS", "description = $description")
-        //If the description size is larger than a certain value, then we shorten it.
-        if (description.length > Constants.LENGTH_DESCRIPTION)
-            binding.descriptionFilm.text = description.substring(0, Constants.LENGTH_DESCRIPTION) + "..."
-        else binding.descriptionFilm.text = description
-        binding.descriptionFilm.setTextAppearance(R.style.app_bold)
+
+        updateDescriptionText(fullDescription)
+
         // When you click on the text, we change its state
         binding.descriptionFilm.setOnClickListener {
-            if (binding.descriptionFilm.length() > Constants.LENGTH_DESCRIPTION ) {
-                if (isCollapsed) {
-                    binding.descriptionFilm.setTextAppearance(R.style.app_bold)
-                    binding.descriptionFilm.text =
-                        description.substring(0, Constants.LENGTH_DESCRIPTION) + "..."
-                    isCollapsed = false
-                } else {
-                    binding.descriptionFilm.setTextAppearance(R.style.app_normal)
-                    binding.descriptionFilm.text = description
-                    isCollapsed = true
-                }
+            if (fullDescription.length > Constants.LENGTH_DESCRIPTION) {
+                isCollapsed = !isCollapsed
+                updateDescriptionText(fullDescription)
             }
         }
-//Show info tv serial
-        if (filmInfo.totalSeasons != null ){
+
+        //Show info TV serial
+        if (filmInfo.totalSeasons != null) {
             binding.serials.root.visibility = View.VISIBLE
-            var quantitySeries = 0
-            filmInfo.listSeasons?.forEach { season ->
-                quantitySeries += season.episodes?.count() ?: 0
-            }
-            var text = "" + resources.getQuantityString(R.plurals.season, filmInfo.totalSeasons!!, filmInfo.totalSeasons!!)
-            text += ", " + resources.getQuantityString(R.plurals.series, quantitySeries, quantitySeries)
-            binding.serials.tvHeaderDown.text = text
+            val quantitySeries = filmInfo.listSeasons?.sumOf { it.episodes?.count() ?: 0 } ?: 0
+            val seasonsText = resources.getQuantityString(R.plurals.season, filmInfo.totalSeasons!!, filmInfo.totalSeasons!!)
+            val seriesText = resources.getQuantityString(R.plurals.series, quantitySeries, quantitySeries)
+            binding.serials.tvHeaderDown.text = "$seasonsText, $seriesText"
         } else {
-            binding.serials.root.visibility = View.INVISIBLE
-            binding.serials.root.layoutParams.height = 0
-//            Log.d("KDS", "Invisible block serials")
+            binding.serials.root.visibility = View.GONE
         }
 
 // Observe clickable
@@ -374,6 +341,16 @@ class FilmPageFragment : Fragment() {
             }
         }
     }
+    private fun updateDescriptionText(description: String) {
+        if (description.length > Constants.LENGTH_DESCRIPTION && !isCollapsed) {
+            binding.descriptionFilm.text = description.substring(0, Constants.LENGTH_DESCRIPTION) + "..."
+            binding.descriptionFilm.setTextAppearance(R.style.app_bold)
+        } else {
+            binding.descriptionFilm.text = description
+            binding.descriptionFilm.setTextAppearance(R.style.app_normal)
+        }
+    }
+
     //Actions for clicking check box
     private fun onClickChecked(collection: CollectionDB){
         viewModel.addRemoveFilmToCollection(collection)
